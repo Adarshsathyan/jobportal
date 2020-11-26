@@ -14,17 +14,18 @@
     </div>
 
     <ul class="nav navbar-top-links navbar-right">
-
+        {{#if admin}}
         <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i
-                    class="fa fa-user fa-fw"></i> <b>Adarsh sathyan</b> <i
+                    class="fa fa-user fa-fw"></i> <b>{{admin.name}}</b> <i
                     class="material-icons right">arrow_drop_down</i></a></li>
+        {{/if}}
     </ul>
 </nav>
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
     <li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
     </li>
-    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+    <li><a href="/admin/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
     </li>
 </ul>
 
@@ -35,7 +36,7 @@
         <ul class="nav" id="main-menu">
 
             <li>
-                <a class=" waves-effect waves-dark" href="/admin"><i class="fa fa-dashboard"></i>
+                <a class=" waves-effect waves-dark" href="/admin/home"><i class="fa fa-dashboard"></i>
                     Dashboard</a>
             </li>
             <li>

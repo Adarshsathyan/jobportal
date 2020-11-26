@@ -7,7 +7,7 @@ var hbs=require('express-handlebars')
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 var db=require('./config/connection')
-
+var session=require('express-session')
 var app = express();
 
 // view engine setup
@@ -19,10 +19,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret:"key",cookie:{maxAge:600000}}));
 db.connect((err)=>{
   if(err) console.log('Database not connected'+err);
   else console.log("Database Connected to port 27017");
 })
+
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);
 
