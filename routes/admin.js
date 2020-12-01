@@ -3,9 +3,9 @@ var router = express.Router();
 var adminHelper=require('../helpers/admin-helper')
 
 /* GET users listing. */
-router.get('/',function(req,res){
-  if (req.session.adminLoggedIn){
-      res.redirect('/admin/home')
+router.get('/',function(req,res,next){
+  if(req.session.adminLoggedIn){
+      res.render('/admin/home')
   }else{
     res.render('admin/login',{layout:null,"Login":req.session.adminErr})
     req.session.adminErr=false
@@ -33,10 +33,10 @@ router.post('/',function(req,res){
   })
 });
 
-router.get('/home', function(req, res, next){
+router.get('/home', function(req, res){
   let admin=req.session.admin
   if(admin){
-    res.render('admin/index',{admin})
+    res.render('admin/index',{admin:true})
   }else{
     res.redirect('/admin')
   }
@@ -50,12 +50,12 @@ router.get('/logout', function(req, res){
 
 
 router.get('/users', function(req, res){
-  res.render('admin/users')
+  res.render('admin/users',{admin:true})
 });
 
 
 router.get('/employee', function(req, res){
-  res.render('admin/employee')
+  res.render('admin/employee',{admin:true})
 });
 
 
