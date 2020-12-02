@@ -3,15 +3,16 @@ var router = express.Router();
 var adminHelper=require('../helpers/admin-helper')
 
 /* GET users listing. */
-router.get('/',function(req,res,next){
+router.get('/',function(req,res){
   if(req.session.adminLoggedIn){
-      res.render('/admin/home')
+      res.redirect('/admin/home')
   }else{
     res.render('admin/login',{layout:null,"Login":req.session.adminErr})
     req.session.adminErr=false
   }
   
 });
+
 
 
 router.post('/',function(req,res){
