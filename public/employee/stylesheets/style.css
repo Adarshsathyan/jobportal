@@ -132,6 +132,26 @@ a {
     background: transparent;
     letter-spacing: 1px;
 }
+.header-left-bottom input[type="tel"] {
+    outline: none;
+    font-size: 15px;
+    color: #222;
+	border:none;
+    width: 90%;
+    display: inline-block;
+    background: transparent;
+    letter-spacing: 1px;
+}
+.header-left-bottom input[type="text"] {
+    outline: none;
+    font-size: 15px;
+    color: #222;
+	border:none;
+    width: 90%;
+    display: inline-block;
+    background: transparent;
+    letter-spacing: 1px;
+}
 .header-left-bottom input[type="password"]{
 	outline: none;
 	font-size: 15px;

@@ -23,43 +23,45 @@
 	<section>
 		<div class="w3layouts-main">
 			<div class="bg-layer">
-				<h1>Log In</h1>
+				<h1>Signup</h1>
+                
 				<div class="header-main">
+                    <p style="color: white;">If you have an account with us, please log in.</p>
 					<div class="main-icon">
-						<span class="fa fa-eercast"></span>
-
-
-
+						<span class="fa fa-eecast"></span>
+                        {{#if login}}
+                        <p style="color: red">Email Already Exists</p>
+                        {{/if}}
 					</div>
 					<div class="header-left-bottom">
-						<form action="/employee" method="post">
+						<form action="/employee/signup" method="post">
 							<div class="icon1">
 								<span class="fa fa-user"></span>
-								<input type="email" placeholder="Username" required="" name="username" />
+								<input type="text" placeholder="Full name" required="" name="name" />
 							</div>
 							<div class="icon1">
+								<span class="fa fa-envelope"></span>
+								<input type="email" placeholder="email" required="" name="username" />
+							</div>
+                            <div class="icon1">
 								<span class="fa fa-lock"></span>
-								<input type="password" placeholder="Password" required="" name="password" />
+								<input type="password" placeholder="password" required="" name="password" />
 							</div>
-
+                            <div class="icon1">
+								<span class="fa fa-phone"></span>
+								<input type="tel" placeholder="mobile" required="" name="mobile" />
+							</div>
 							<div class="bottom">
-								<button class="btn">Log In</button>
+								<button class="btn">Create</button>
 							</div>
-							<div class="links">
-								<p><a href="#">Forgot Password?</a></p>
-								<p class="right"><a href="/employee/signup"> Register</a></p>
+							<div class="links" >
+								<p><a href="/employee">Already signed? login</a></p>
+								
 								<div class="clear"></div>
 							</div>
 						</form>
 					</div>
-					<div class="social">
-						<ul>
-							<li>or login using : </li>
-
-							<li><a href="#" class="twitter"><span class="fa fa-phone"></span></a></li>
-
-						</ul>
-					</div>
+					
 				</div>
 
 				<!-- copyright -->
