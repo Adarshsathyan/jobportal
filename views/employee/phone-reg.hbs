@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>On Job</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Custom Theme files -->
+	<link href="stylesheets/style.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="stylesheets/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+	<!-- //Custom Theme files -->
+
+	<!-- web font -->
+	<link href="//fonts.googleapis.com/css?family=Hind:300,400,500,600,700" rel="stylesheet">
+	<!-- //web font -->
+
+</head>
+
+<body>
+	<!-- main -->
+	<section>
+		<div class="w3layouts-main">
+			<div class="bg-layer">
+				<h1>Signup</h1>
+                
+				<div class="header-main">
+                    <p style="color: white;">If you have an account with us, please log in.</p>
+					<div class="main-icon">
+						<span class="fa fa-eecast"></span>
+                        {{#if log}}
+                        <p style="color: red">Phone Already Exists Please login</p>
+                        {{/if}}
+					</div>
+					<div class="header-left-bottom">
+						<form action="/employee/phone-signup" method="post">
+							<div class="icon1">
+								<span class="fa fa-user"></span>
+								<input type="text" placeholder="Full name" required="" name="name" />
+							</div>
+							<div class="icon1">
+								<span class="fa fa-envelope"></span>
+								<input type="email" placeholder="email" required="" name="username" />
+							</div>
+                            <div class="icon1">
+								<span class="fa fa-phone"></span>
+								<input type="tel" placeholder="mobile with Country code" required="" name="mobile" />
+							</div>
+							<div class="bottom">
+								<button class="btn">Send code</button>
+							</div>
+							<div class="links" >
+								<p><a href="/employee">Already signed? login</a></p>
+								
+								<div class="clear"></div>
+							</div>
+						</form>
+					</div>
+					
+				</div>
+
+				<!-- copyright -->
+				<footer>
+					<p style="text-align: center; margin-top:34px; color:rgb(179, 178, 169)">
+						Copyright © 2020 JobOn </a>
+					</p>
+
+				</footer>
+				<!-- //copyright -->
+			</div>
+		</div>
+	</section>
+
+
+	<!-- //main -->
+
+</body>
+
+</html>
