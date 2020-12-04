@@ -86,11 +86,11 @@ router.get('/phone', function(req, res) {
 });
 router.post('/phone', function(req, res) {
   employeeHelper.phoneLogin(req.body).then((data)=>{
-    if(data.status){
+    if(data.valid===false){
+      console.log(data);
       req.session.phone=req.body.phone
       res.redirect('/employee/verify')
-    }else{
-      
+    }else{ 
       res.redirect('/employee/phone')
     }
   })
@@ -106,8 +106,14 @@ router.get('/verify', function(req, res) {
 
 router.post('/verify', function(req, res) {
   employeeHelper.phoneAuth(req.body,req.session.phone).then((result)=>{
+    if(result.valid){
     req.session.loggedIn=true
     res.redirect('/employee/home')
+  }else{
+    
+    res.redirect('/employee/verify')
+  }
+    
   })
 });
 
@@ -127,7 +133,7 @@ router.post('/phone-signup', function(req, res) {
       res.redirect('/employee/verify')
     }else{
       req.session.err=true
-     
+      console.log("this");
       res.redirect('/employee/phone-signup')
     }
    

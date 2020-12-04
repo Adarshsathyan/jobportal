@@ -60,9 +60,9 @@ module.exports={
                             channel:"sms"
                         }  
                         ).then((data)=>{
-                            resolve(data)
+                            resolve(data,status=true,response)
                         })
-                    resolve(response.ops[0],data,status=true)
+                
                 })
             }
             
@@ -70,6 +70,8 @@ module.exports={
     },
     phoneAuth:(code,phone)=>{
         return new Promise((resolve,reject)=>{
+            console.log(code);
+            console.log(phone);
             twilio
                 .verify
                 .services(otpAuth.serviceID)
@@ -78,7 +80,10 @@ module.exports={
                     to:phone,
                     code:code.otp
                 }).then((data)=>{
+                    console.log(data);
                     resolve(data)
+            }).then((data)=>{
+                resolve(data)
             })
             
         })
@@ -88,8 +93,7 @@ module.exports={
             let p = phoneDetails.phone
             let puser=await db.get().collection(collections.EMP_PHONE_LOGIN).findOne({mobile:p})
             if(puser){
-                resolve(status=false)    
-            }else{
+                console.log("entered");
                 twilio
                     .verify
                     .services(otpAuth.serviceID)
@@ -99,9 +103,12 @@ module.exports={
                         channel:"sms"
                     }  
                     ).then((data)=>{
-                        resolve(data,status=true)
+                        
+                        resolve(data)
                 })
+            }else{
                 
+                resolve(status=false)
             }
             
         })
