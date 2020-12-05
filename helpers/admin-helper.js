@@ -1,6 +1,8 @@
 var db=require('../config/connection')
 var bcrypt=require('bcrypt')
 var collections=require('../config/collections')
+const { response } = require('express')
+const { ObjectID } = require('mongodb')
 module.exports={
 
     // adminSignup:(admin)=>{
@@ -39,6 +41,34 @@ module.exports={
                 resolve({status:false})
                 console.log("failed");
             }
+        })
+    },
+    getAllEmployee:()=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.EMPLOYEE_COLLECTION).find().toArray().then((result)=>{
+                resolve(result)
+            })
+                
+        })
+    },
+    getEmployee:(emp)=>{
+        return new Promise((resolve,reject)=>{
+            console.log(emp);
+            let value={}
+            value.emp=emp
+            db.get().collection(collections.EMP_PHONE_LOGIN).find().toArray().then((result)=>{
+                value.emp2=result
+                
+                resolve(value)
+            })
+        })
+    },
+    block:(id)=>{
+       console.log(id);
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.EMPLOYEE_COLLECTION).findOneAndUpdate({_id:id},{$set:{status:'false'}}).then((result)=>{
+                console.log(result);
+            })
         })
     }
 }

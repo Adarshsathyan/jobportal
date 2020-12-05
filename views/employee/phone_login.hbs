@@ -27,25 +27,21 @@
 				<div class="header-main">
 					<div class="main-icon">
 						<span class="fa fa-eercast"></span>
-
+						{{#if login}}
+                        <p style="color: red">Please Register with Phonenumber</p>
+                        {{/if}}
 					</div>
 					<div class="header-left-bottom">
 						<form action="/employee/phone" method="post">
 							<div class="icon1">
 								<span class="fa fa-phone"></span>
-								<input type="tel" placeholder="Mobile with countrycode" required="" name="phone" />
+								<input type="tel" placeholder="Mobile with countrycode" required="" name="phone"  />
 							</div>
 
 							<div class="bottom">
 								<button class="btn">Send Code</button>
 							</div>
-							<div class="links">
-								<p style="margin-left:102px ;"><a href="/employee/signup">Login by register</a></p>
-								<div class="clear"></div>
-							</div>
-						</form>
-					</div>
-					<div class="social">
+							<div class="social">
 						<ul>
 							<li> register using : </li>
 
@@ -53,6 +49,13 @@
 
 						</ul>
 					</div>
+							<div class="links">
+								<p style="margin-left:102px ;"><a href="/employee/signup">Login by register</a></p>
+								<div class="clear"></div>
+							</div>
+						</form>
+					</div>
+					
 				</div>
 
 				<!-- copyright -->

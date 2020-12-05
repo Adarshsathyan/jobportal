@@ -5,22 +5,22 @@ var employeeHelper=require('../helpers/employee-helper')
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  if(req.session.loggedIn){
+  if(req.session.emploggedIn){
     res.redirect('/employee/home')
   }else{
-    res.render('employee/login',{layout:null});
+    res.render('employee/login',{layout:null,login:req.session.signErr});
+    req.session.signErr=false
   }
-   
-  
   
 });
 router.post('/', function(req, res) {
   employeeHelper.employeeAuth(req.body).then((response)=>{
     if(response.status){
-      req.session.loggedIn=true
+      req.session.emploggedIn=true
       req.session.employee=response.employee
       res.redirect('/employee/home')
     }else{
+      req.session.signErr=true
       res.redirect('/employee')
     }
     
@@ -30,7 +30,7 @@ router.post('/', function(req, res) {
 });
 
 router.get('/signup', function(req, res) {
-  if(req.session.loggedIn){
+  if(req.session.emploggedIn){
     res.redirect('/employee/home')
   }else{
     res.render('employee/signup',{layout:null,login:req.session.signErr});
@@ -41,8 +41,9 @@ router.get('/signup', function(req, res) {
 
 router.post('/signup', function(req, res) {
   employeeHelper.employeeSignup(req.body).then((response)=>{
-    if(response.status){
-      req.session.loggedIn=true
+    console.log(response);
+    if(response.name){
+      req.session.emploggedIn=true
     req.session.employee=response
     res.redirect('/employee/home')
     }else{
@@ -54,7 +55,7 @@ router.post('/signup', function(req, res) {
   
 });
 router.get('/logout',function(req,res){
-  req.session.destroy()
+  req.session.emploggedIn=null
   res.redirect('/employee')
 })
 
@@ -73,7 +74,7 @@ router.get('/addjob', function(req, res) {
 });
 
 router.get('/home', function(req, res) {
-  if(req.session.loggedIn){
+  if(req.session.emploggedIn){
     res.render('employee/index',{employee:true});
   }else{
     res.redirect('/employee')
@@ -82,35 +83,41 @@ router.get('/home', function(req, res) {
 });
 
 router.get('/phone', function(req, res) {
-  res.render('employee/phone_login',{layout:null});
+  res.render('employee/phone_login',{layout:null,login:req.session.signErr});
+  req.session.signErr=false
 });
 router.post('/phone', function(req, res) {
+  
   employeeHelper.phoneLogin(req.body).then((data)=>{
     if(data.valid===false){
-      console.log(data);
+      
       req.session.phone=req.body.phone
       res.redirect('/employee/verify')
-    }else{ 
+    }else{
+      req.session.signErr=true 
       res.redirect('/employee/phone')
     }
   })
 });
 router.get('/verify', function(req, res) {
-  if(req.session.loggedIn){
+  if(req.session.emploggedIn){
     res.redirect('/employee/home')
   }else{
-    res.render('employee/verify_phone',{layout:null});
+    res.render('employee/verify_phone',{layout:null,login:req.session.logErr});
+    req.session.logErr=false
   }
   
 });
 
 router.post('/verify', function(req, res) {
   employeeHelper.phoneAuth(req.body,req.session.phone).then((result)=>{
+    console.log(result.valid);
     if(result.valid){
-    req.session.loggedIn=true
+      
+    req.session.emploggedIn=true
     res.redirect('/employee/home')
   }else{
-    
+    req.session.logErr=true
     res.redirect('/employee/verify')
   }
     
@@ -127,6 +134,7 @@ router.get('/phone-signup', function(req, res) {
 
 router.post('/phone-signup', function(req, res) {
   employeeHelper.phoneSignup(req.body).then((result)=>{
+    console.log(result);
     if(result.status){
       req.session.signedIn=true
       req.session.phone=req.body.mobile

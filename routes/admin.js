@@ -51,13 +51,31 @@ router.get('/logout', function(req, res){
 
 
 router.get('/users', function(req, res){
-  res.render('admin/users',{admin:true})
+  if(req.session.adminLoggedIn){
+    res.render('admin/users',{admin:true})
+  }else{
+    res.redirect('/admin')
+  }
+  
 });
 
 
 router.get('/employee', function(req, res){
-  res.render('admin/employee',{admin:true})
+  if(req.session.adminLoggedIn){
+    adminHelper.getAllEmployee().then((data)=>{
+    
+      res.render('admin/employee',{admin:true,employees:data})
+    })
+  }else{
+    res.redirect('/admin')
+  }
+  
 });
+
+router.get('/block/:id', function(req, res){
+  adminHelper.block("'"+req.params.id+"'")  
+});
+
 
 
 module.exports = router;

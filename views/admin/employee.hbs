@@ -31,61 +31,24 @@
                                                 <th>Comapny Name</th>
                                                 <th>Email</th>
                                                 <th>Mobile</th>
-                                                <th>Address</th>
+                                                
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {{#each employees}}
                                             <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
+                                                <td>{{this.name}}</td>
+                                                <td>{{this.username}}</td>
+                                                <td>{{this.mobile}}</td>
+                                               
                                                 <td><a class="btn btn-primary">View</a>
                                                     <a class="btn btn-success">Edit</a>
                                                     <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
+                                                    <a href="/admin/block/{{this._id}}"class="btn btn-warning">Block</a></td>
                                             </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
+                                            {{/each}}
+                                            
                                         </tbody>
                                     </table>
                                 </div>

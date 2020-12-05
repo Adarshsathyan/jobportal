@@ -3,33 +3,33 @@ var bcrypt=require('bcrypt')
 var collections=require('../config/collections')
 var otpAuth=require('../config/otpauth')
 const twilio=require('twilio')(otpAuth.accountSId,otpAuth.authToken)
-module.exports={
 
-     employeeSignup:(employee)=>{
-         return new Promise(async(resolve,reject)=>{
-            let user=employee.username
-            let empUser=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({username:user})
-            if(empUser){
+module.exports={
+    userSignup:(userDetails)=>{
+        return new Promise(async(resolve,reject)=>{
+            let nUser=userDetails.username
+            let user=await db.get().collection(collections.USER_COLLECTION).findOne({username:nUser})
+            if(user){
                 resolve(name=false)
             }else{
-                employee.password=await bcrypt.hash(employee.password,10)
-                db.get().collection(collections.EMPLOYEE_COLLECTION).insertOne(employee).then((response)=>{
+                userDetails.password=await bcrypt.hash(userDetails.password,10)
+                db.get().collection(collections.USER_COLLECTION).insertOne(userDetails).then((response)=>{
                     console.log(response)
                     resolve(response.ops[0],status=true)
                 })
             }
           })
-     },
-    employeeAuth:(employeeData)=>{
+    },
+    userLogin:(userData)=>{
         return new Promise(async(resolve,reject)=>{
             let loginStatus=false
             let response={}
-            let employee=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({username:employeeData.username})
-            
-            if(employee){
-                bcrypt.compare(employeeData.password,employee.password).then((status)=>{
+            let user=await db.get().collection(collections.USER_COLLECTION).findOne({username:userData.username})
+            console.log(user);
+            if(user){
+                bcrypt.compare(userData.password,user.password).then((status)=>{
                     if(status){
-                        response.employee=employee
+                        response.user=user
                         response.status=true
                         resolve(response)
                     }else{
@@ -43,20 +43,20 @@ module.exports={
             }
         })
     },
-    phoneSignup:(phoneDetails)=>{
+    phoneSignup:(details)=>{
         return new Promise(async(resolve,reject)=>{
-            let p = phoneDetails.mobile
-            let puser=await db.get().collection(collections.EMP_PHONE_LOGIN).findOne({mobile:p})
+            let p = details.mobile
+            let puser=await db.get().collection(collections.USER_PHONE_lOGIN).findOne({mobile:p})
             if(puser){
                 resolve(status=false)
             }else{
-                db.get().collection(collections.EMP_PHONE_LOGIN).insertOne(phoneDetails).then((response)=>{
+                db.get().collection(collections.USER_PHONE_lOGIN).insertOne(details).then((response)=>{
                     twilio
                         .verify
                         .services(otpAuth.serviceID)
                         .verifications
                         .create({
-                            to:"+91"+phoneDetails.mobile,
+                            to:"+91"+details.mobile,
                             channel:"sms"
                         }  
                         ).then((data)=>{
@@ -68,18 +68,18 @@ module.exports={
             
         })
     },
-    phoneAuth:(code,phone)=>{
-        return new Promise((resolve,reject)=>{
-            
+    phoneVerify:(code,mobilenum)=>{
+        return new Promise(async(resolve,reject)=>{
+            let puser=await db.get().collection(collections.USER_PHONE_lOGIN).findOne({mobile:mobilenum})
+            console.log(puser);
             twilio
                 .verify
                 .services(otpAuth.serviceID)
                 .verificationChecks
                 .create({
-                    to:"+91"+phone,
+                    to:"+91"+mobilenum,
                     code:code.otp
-                }).then((data)=>{
-                    
+                }).then((data)=>{ 
                     resolve(data)
             })
             
@@ -87,8 +87,8 @@ module.exports={
     },
     phoneLogin:(phoneDetails)=>{
         return new Promise(async(resolve,reject)=>{
-            let p = phoneDetails.phone
-            let puser=await db.get().collection(collections.EMP_PHONE_LOGIN).findOne({mobile:p})
+            let p = phoneDetails.mobile
+            let puser=await db.get().collection(collections.USER_PHONE_lOGIN).findOne({mobile:p})
             if(puser){
                 console.log("entered");
                 twilio
@@ -96,7 +96,7 @@ module.exports={
                     .services(otpAuth.serviceID)
                     .verifications
                     .create({
-                        to:"+91"+phoneDetails.phone,
+                        to:"+91"+phoneDetails.mobile,
                         channel:"sms"
                     }  
                     ).then((data)=>{ 

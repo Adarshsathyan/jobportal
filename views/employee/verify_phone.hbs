@@ -27,10 +27,9 @@
 				<div class="header-main">
 					<div class="main-icon">
 						<span class="fa fa-eercast"></span>
-						{{#if log}}
+						{{#if login}}
                         <p style="color: red">Invalid code</p>
                         {{/if}}
-
 					</div>
 					<div class="header-left-bottom">
 						<form action="/employee/verify" method="post">
@@ -38,7 +37,6 @@
 								<span class="fa fa-envelope"></span>
 								<input type="text" placeholder="Enter 4 digit code" required="" name="otp" />
 							</div>
-
 							<div class="bottom">
 								<button class="btn">Verify</button>
 							</div>
@@ -48,7 +46,6 @@
 							</div>
 						</form>
 					</div>
-					
 				</div>
 
 				<!-- copyright -->
