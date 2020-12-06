@@ -46,11 +46,12 @@ module.exports={
     phoneSignup:(details)=>{
         return new Promise(async(resolve,reject)=>{
             let p = details.mobile
-            let puser=await db.get().collection(collections.USER_PHONE_lOGIN).findOne({mobile:p})
+            let puser=await db.get().collection(collections.USER_COLLECTION).findOne({mobile:p})
+            
             if(puser){
                 resolve(status=false)
             }else{
-                db.get().collection(collections.USER_PHONE_lOGIN).insertOne(details).then((response)=>{
+                db.get().collection(collections.USER_COLLECTION).insertOne(details).then((response)=>{
                     twilio
                         .verify
                         .services(otpAuth.serviceID)
@@ -70,8 +71,10 @@ module.exports={
     },
     phoneVerify:(code,mobilenum)=>{
         return new Promise(async(resolve,reject)=>{
-            let puser=await db.get().collection(collections.USER_PHONE_lOGIN).findOne({mobile:mobilenum})
-            console.log(puser);
+            let response={}
+            let puser=await db.get().collection(collections.USER_COLLECTION).findOne({phone:mobilenum})
+            response.user=puser
+            response.valid=true
             twilio
                 .verify
                 .services(otpAuth.serviceID)
@@ -79,8 +82,13 @@ module.exports={
                 .create({
                     to:"+91"+mobilenum,
                     code:code.otp
-                }).then((data)=>{ 
-                    resolve(data)
+                }).then((data)=>{
+                    if(data.valid==true){
+                        resolve(response)
+                    }else{
+                        resolve(data)
+                    }
+                    
             })
             
         })
@@ -88,7 +96,9 @@ module.exports={
     phoneLogin:(phoneDetails)=>{
         return new Promise(async(resolve,reject)=>{
             let p = phoneDetails.mobile
-            let puser=await db.get().collection(collections.USER_PHONE_lOGIN).findOne({mobile:p})
+            let puser=await db.get().collection(collections.USER_COLLECTION).findOne({phone:p})
+            console.log(p);
+            console.log(puser);
             if(puser){
                 console.log("entered");
                 twilio

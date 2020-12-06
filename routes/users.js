@@ -111,6 +111,7 @@ router.post('/verify', function(req, res) {
     console.log(result);
     if(result.valid){
       req.session.userloggedIn=true
+      req.session.user=result.user
       res.redirect('/')
     }else{
       req.session.logErr=true

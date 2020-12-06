@@ -26,7 +26,7 @@ module.exports={
             let response={}
             let employee=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({username:employeeData.username})
             
-            if(employee){
+            if(employee.password){
                 bcrypt.compare(employeeData.password,employee.password).then((status)=>{
                     if(status){
                         response.employee=employee
@@ -46,11 +46,11 @@ module.exports={
     phoneSignup:(phoneDetails)=>{
         return new Promise(async(resolve,reject)=>{
             let p = phoneDetails.mobile
-            let puser=await db.get().collection(collections.EMP_PHONE_LOGIN).findOne({mobile:p})
+            let puser=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({mobile:p})
             if(puser){
                 resolve(status=false)
             }else{
-                db.get().collection(collections.EMP_PHONE_LOGIN).insertOne(phoneDetails).then((response)=>{
+                db.get().collection(collections.EMPLOYEE_COLLECTION).insertOne(phoneDetails).then((response)=>{
                     twilio
                         .verify
                         .services(otpAuth.serviceID)
@@ -69,28 +69,41 @@ module.exports={
         })
     },
     phoneAuth:(code,phone)=>{
-        return new Promise((resolve,reject)=>{
+        return new Promise(async(resolve,reject)=>{
+            let response={}
+            let pemployee=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({mobile:phone})
+            if(pemployee){
+                twilio
+                    .verify
+                    .services(otpAuth.serviceID)
+                    .verificationChecks
+                    .create({
+                        to:"+91"+phone,
+                        code:code.otp
+                    }).then((data)=>{
+                        if(data.valid==true){
+                            response.employee=pemployee
+                            response.valid=true
+                            resolve(response)
+                            console.log(response);
+                        }else{
+                            resolve(data)
+                            console.log(data);
+                        }
+                })
+            }else{
+                resolve({valid:false})
+            }
             
-            twilio
-                .verify
-                .services(otpAuth.serviceID)
-                .verificationChecks
-                .create({
-                    to:"+91"+phone,
-                    code:code.otp
-                }).then((data)=>{
-                    
-                    resolve(data)
-            })
             
         })
     },
     phoneLogin:(phoneDetails)=>{
         return new Promise(async(resolve,reject)=>{
             let p = phoneDetails.phone
-            let puser=await db.get().collection(collections.EMP_PHONE_LOGIN).findOne({mobile:p})
+            let puser=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({mobile:p})
             if(puser){
-                console.log("entered");
+                
                 twilio
                     .verify
                     .services(otpAuth.serviceID)

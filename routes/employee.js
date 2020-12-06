@@ -15,9 +15,10 @@ router.get('/', function(req, res) {
 });
 router.post('/', function(req, res) {
   employeeHelper.employeeAuth(req.body).then((response)=>{
+    console.log(response);
     if(response.status){
       req.session.emploggedIn=true
-      req.session.employee=response.employee
+      req.session.employe=response.employee
       res.redirect('/employee/home')
     }else{
       req.session.signErr=true
@@ -44,7 +45,7 @@ router.post('/signup', function(req, res) {
     console.log(response);
     if(response.name){
       req.session.emploggedIn=true
-    req.session.employee=response
+    req.session.employe=response.name
     res.redirect('/employee/home')
     }else{
       req.session.signErr=true
@@ -75,7 +76,8 @@ router.get('/addjob', function(req, res) {
 
 router.get('/home', function(req, res) {
   if(req.session.emploggedIn){
-    res.render('employee/index',{employee:true});
+    console.log(req.session.employe);
+    res.render('employee/index',{employee:true,employeeUser:req.session.employe});
   }else{
     res.redirect('/employee')
   }
@@ -111,9 +113,9 @@ router.get('/verify', function(req, res) {
 
 router.post('/verify', function(req, res) {
   employeeHelper.phoneAuth(req.body,req.session.phone).then((result)=>{
-    console.log(result.valid);
+    
     if(result.valid){
-      
+    req.session.employe=result.employee
     req.session.emploggedIn=true
     res.redirect('/employee/home')
   }else{
