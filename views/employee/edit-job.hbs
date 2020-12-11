@@ -1,0 +1,84 @@
+<section>
+    <div id="page-wrapper">
+        <div class="container" style="background-color: white;">
+            <h3 class="text-center" style="margin-top: 2em; margin-bottom: 2em;">Add Job</h3>
+            <form class=" mb-5" action="/employee/editjob/{{job._id}}" method="post" novalidate="novalidate" enctype="multipart/form-data">
+            
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="col-md-12">
+                            <label style="color: black;">Name of Company</label>
+                            <input type="text" class="form-control " id="name" name="name" value="{{job.name}}"
+                                placeholder="Full name">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Location</label>
+                            <input type="text" class="form-control col-md" id="location" name="location" value="{{job.location}}"
+                                placeholder="Location">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Designation</label>
+                            <input type="text" class="form-control col-md" id="phone" name="designation" value="{{job.designation}}"
+                                placeholder="Designation">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Type</label>
+                            <input type="text" class="form-control col-md" id="type" name="type" value="{{job.type}}"
+                                placeholder="Partime/Fulltime">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Skills</label>
+                            <input type="text" class="form-control col-md" id="Skills" name="skills" value="{{job.skills}}"
+                                placeholder="Skills">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Qualification</label>
+                            <input type="text" class="form-control col-md" id="Qualification" name="qualification" value="{{job.qualification}}"
+                                placeholder="Qualification">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Experience Required</label>
+                            <input type="text" class="form-control col-md" id="Experience" name="experience" value="{{job.experience}}"
+                                placeholder="Experience">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Language Needed</label>
+                            <input type="text" class="form-control" id="Language" name="language" value="{{job.language}}"
+                                placeholder="Language">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Pin Number</label>
+                            <input type="text" class="form-control col-md" id="Pin" name="pin" value="{{job.pin}}"
+                                placeholder="Pin">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Description</label>
+                                 <input type="text" class="form-control" id="Descriptio" name="description" value="{{job.description}}"
+                                placeholder="Description">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Salary</label>
+                                 <input type="number" class="form-control" id="salary" name="salary" value="{{job.salary}}"
+                                placeholder="salary">
+                        </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Image</label>
+                            <img src="/employee/job_images/{{job._id}}.jpg" alt="" style="width:60px;height:60px; margin-bottom:5px;">
+                            <input type="file"  id="image" name="image" value=""
+                                placeholder="image">
+                                <input type="hidden"  name="eid" value="{{employeeUser._id}}">
+                        </div>
+                         
+                        <div class=" col-md-12 form-group " style="display: inline-flex;">
+                            <button type="submit" value="submit" class="btn btn-success col-md-6">Submit</button>
+                            <button type="submit" value="submit" class="btn btn-danger col-md-6"
+                                style="margin-left: 10px;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

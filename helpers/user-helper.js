@@ -9,9 +9,13 @@ module.exports={
         return new Promise(async(resolve,reject)=>{
             let nUser=userDetails.username
             let user=await db.get().collection(collections.USER_COLLECTION).findOne({username:nUser})
+            let userNum=await db.get().collection(collections.USER_COLLECTION).findOne({phone:userDetails.phone})
             if(user){
                 resolve(name=false)
-            }else{
+            }else if(userNum){
+                resolve(name=false)
+            }
+            else{
                 userDetails.password=await bcrypt.hash(userDetails.password,10)
                 db.get().collection(collections.USER_COLLECTION).insertOne(userDetails).then((response)=>{
                     console.log(response)
@@ -23,10 +27,16 @@ module.exports={
     userLogin:(userData)=>{
         return new Promise(async(resolve,reject)=>{
             let loginStatus=false
+            let blockResponse={}
             let response={}
             let user=await db.get().collection(collections.USER_COLLECTION).findOne({username:userData.username})
-            console.log(user);
-            if(user){
+            block=user.block
+            if(block === "1"){
+                console.log("user Blocked");
+                blockResponse.status=false
+                blockResponse.user=user
+                resolve(blockResponse)
+            }else if(user){
                 bcrypt.compare(userData.password,user.password).then((status)=>{
                     if(status){
                         response.user=user

@@ -1,0 +1,26 @@
+<section>
+    <div id="page-wrapper">
+        <div class="container" style="background-color: white;">
+            <h3 class="text-center" style="margin-top: 2em; margin-bottom: 2em;">Employee</h3>
+            <form class=" mb-5" action="/admin/edit/{{employer._id}}" method="post" >
+                <div class="row col-md-12">
+                    <div class="col-md-11 form-group">
+                        <label style="color: black;">Name of Company</label>
+                        <input type="text" class="form-control " id="name" name="name" value="{{employer.name}}">
+                    </div>
+                    <div class="col-md-11 form-group ">
+                        <label style="color: black;">Email</label>
+                        <input type="email" class="form-control col-md" id="email" name="username" value="{{employer.username}}">
+                    </div>
+                    <div class="col-md-11 form-group ">
+                        <label style="color: black;">Mobile No</label>
+                        <input type="text" class="form-control col-md" id="mobile" name="mobile" value="{{employer.mobile}}">  
+                    </div>
+                     <div class="col-md-11 form-group ">
+                        <button class="btn btn-danger">Update</button>   
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

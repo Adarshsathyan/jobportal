@@ -31,13 +31,16 @@
 						{{#if login}}
                         <p style="color: red">Invalid Username or password. Please signup</p>
                         {{/if}}
+						{{#if block}}
+						<p style="color: red">You Have been Blocked</p>
+						{{/if}}
 
 					</div>
 					<div class="header-left-bottom">
 						<form action="/employee" method="post">
 							<div class="icon1">
 								<span class="fa fa-user"></span>
-								<input type="email" placeholder="Username" required="" name="username" />
+								<input type="email" placeholder="Username/email" required="" name="username" />
 							</div>
 							<div class="icon1">
 								<span class="fa fa-lock"></span>

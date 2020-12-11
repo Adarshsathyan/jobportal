@@ -1,4 +1,3 @@
-const { response } = require('express');
 var express = require('express');
 var router = express.Router();
 var employeeHelper=require('../helpers/employee-helper')
@@ -8,18 +7,21 @@ router.get('/', function(req, res) {
   if(req.session.emploggedIn){
     res.redirect('/employee/home')
   }else{
-    res.render('employee/login',{layout:null,login:req.session.signErr});
+    res.render('employee/login',{layout:null,login:req.session.signErr,block:req.session.blockErr});
+    req.session.blockErr=false
     req.session.signErr=false
   }
   
 });
 router.post('/', function(req, res) {
   employeeHelper.employeeAuth(req.body).then((response)=>{
-    console.log(response);
     if(response.status){
       req.session.emploggedIn=true
       req.session.employe=response.employee
       res.redirect('/employee/home')
+    }else if(response.employee){
+      req.session.blockErr=true
+      res.redirect('/employee')
     }else{
       req.session.signErr=true
       res.redirect('/employee')
@@ -45,7 +47,7 @@ router.post('/signup', function(req, res) {
     console.log(response);
     if(response.name){
       req.session.emploggedIn=true
-    req.session.employe=response.name
+    req.session.employe=response
     res.redirect('/employee/home')
     }else{
       req.session.signErr=true
@@ -61,17 +63,55 @@ router.get('/logout',function(req,res){
 })
 
 router.get('/jobs', function(req, res) {
-  res.render('employee/jobs',{employee:true});
+  if(req.session.emploggedIn){
+    employeeHelper.getJobs(req.session.employe._id).then((result)=>{
+      res.render('employee/jobs',{employee:true,employeeUser:req.session.employe,jobs:result});
+    })
+  }else{
+    res.redirect('/employee')
+  }
+  
 });
 
 router.get('/requests', function(req, res) {
-  res.render('employee/requests',{employee:true});
+  if(req.session.emploggedIn){
+    res.render('employee/requests',{employee:true,employeeUser:req.session.employe});
+  }else{
+    res.redirect('/employee')
+  }
+  
 });
 router.get('/approved', function(req, res) {
-  res.render('employee/approved',{employee:true});
+  if(req.session.emploggedIn){
+    res.render('employee/approved',{employee:true,employeeUser:req.session.employe});
+  }else{
+    res.redirect('/employee')
+  }
+  
 });
 router.get('/addjob', function(req, res) {
-  res.render('employee/add-job',{employee:true});
+  if(req.session.emploggedIn){
+    res.render('employee/add-job',{employee:true,employeeUser:req.session.employe});
+
+  }else{
+    res.redirect('/employee')
+  }
+  
+});
+
+router.post('/addjob', function(req, res) {
+  employeeHelper.addJob(req.body).then((id)=>{
+    let image=req.files.image
+    image.mv('./public/employee/job_images/'+id+'.jpg',(err,done)=>{
+      if(!err){
+        res.redirect('/employee/jobs')
+      }else{
+        res.redirect('/employee/addjob')
+      }
+    })
+    
+  })
+  
 });
 
 router.get('/home', function(req, res) {
@@ -143,11 +183,34 @@ router.post('/phone-signup', function(req, res) {
       res.redirect('/employee/verify')
     }else{
       req.session.err=true
-      console.log("this");
       res.redirect('/employee/phone-signup')
     }
    
   })
 });
+router.get('/editjob/:id', function(req, res){
+  if(req.session.emploggedIn){
+    employeeHelper.editJob(req.params.id).then((response)=>{
+      res.render('employee/edit-job',{employee:true,job:response,employeeUser:req.session.employe})
+    })
+  }else{
+    res.redirect('/employee')
+  }
+});
+router.post('/editjob/:id',function(req,res){
+  employeeHelper.updateJob(req.params.id,req.body).then(()=>{
+    res.redirect('/employee/jobs')
+    if(req.files.image){
+      let image=req.files.image
+      image.mv('./public/employee/job_images/'+req.params.id+'.jpg')
+    }
+  })
+});
+router.get('/deletejob/:id',function(req,res){
+  employeeHelper.deleteJob(req.params.id).then(()=>{
+    res.redirect('/employee/jobs')
+  })
+});
+
 
 module.exports = router;

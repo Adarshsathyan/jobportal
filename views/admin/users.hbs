@@ -5,7 +5,7 @@
                 <h1 class="page-header">
                     Users
                 </h1>
-                <a href="" class="btn btn-success col-md-3" style="float: right; margin-right:40px;">Add Users <i class="fa fa-plus" aria-hidden="true"></i></a>
+                
                 <ol class="breadcrumb">
                     <li><a href="#">Home</a></li>
                     <li><a href="#">Tables</a></li>
@@ -31,61 +31,20 @@
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Mobile</th>
-                                                <th>Address</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {{#each users}}
                                             <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
+                                                <td>{{this.name}}</td>
+                                                <td>{{this.username}}</td>
+                                                <td>{{this.phone}}</td>
                                                 <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
+                                                    <a class="btn btn-danger" href="/admin/deleteuser/{{this._id}}">Delete</a>
+                                                    <a class="btn btn-warning" href="/admin/blockuser/{{this._id}}">Block</a></td>
                                             </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Adarsh</td>
-                                                <td>a@gamil.com</td>
-                                                <td>2964462424</td>
-                                                <td>xyzzfsfffdsf</td>
-                                                <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a class="btn btn-warning">Block</a></td>
-                                            </tr>
+                                           {{/each}}
                                         </tbody>
                                     </table>
                                 </div>

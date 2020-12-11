@@ -21,7 +21,7 @@ router.get('/login', function(req, res, next) {
   if(req.session.userloggedIn){
     res.redirect('/')
   }
-  res.render('user/login',{layout:null,login:req.session.signErr});
+  res.render('user/login',{layout:null,login:req.session.signErr,block:req.session.userBlockErr});
   req.session.signErr=false
 });
 router.post('/login', function(req,res) {
@@ -30,6 +30,9 @@ router.post('/login', function(req,res) {
       req.session.userloggedIn=true
       req.session.user=response.user
       res.redirect('/')
+    }else if(response.user){
+      req.session.userBlockErr=true
+      res.redirect('/login')
     }else{
       req.session.signErr=true
       res.redirect('/login')

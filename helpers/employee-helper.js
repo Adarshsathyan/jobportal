@@ -2,6 +2,7 @@ var db=require('../config/connection')
 var bcrypt=require('bcrypt')
 var collections=require('../config/collections')
 var otpAuth=require('../config/otpauth')
+const objectId=require("mongodb").ObjectID
 const twilio=require('twilio')(otpAuth.accountSId,otpAuth.authToken)
 module.exports={
 
@@ -9,12 +10,17 @@ module.exports={
          return new Promise(async(resolve,reject)=>{
             let user=employee.username
             let empUser=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({username:user})
+            let empNum=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({mobile:employee.mobile})
+            console.log(empUser,empNum);
             if(empUser){
                 resolve(name=false)
-            }else{
+            }else if(empNum){
+                resolve(name=false)
+            }
+            else{
                 employee.password=await bcrypt.hash(employee.password,10)
                 db.get().collection(collections.EMPLOYEE_COLLECTION).insertOne(employee).then((response)=>{
-                    console.log(response)
+                    
                     resolve(response.ops[0],status=true)
                 })
             }
@@ -23,10 +29,17 @@ module.exports={
     employeeAuth:(employeeData)=>{
         return new Promise(async(resolve,reject)=>{
             let loginStatus=false
+            let blockResponse={}
             let response={}
             let employee=await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({username:employeeData.username})
-            
-            if(employee.password){
+            block=employee.block
+            if(block === "1"){
+                console.log("user Blocked");
+                blockResponse.status=false
+                blockResponse.employee=employee
+                
+                resolve(blockResponse)
+            }else if(employee.password){
                 bcrypt.compare(employeeData.password,employee.password).then((status)=>{
                     if(status){
                         response.employee=employee
@@ -37,7 +50,8 @@ module.exports={
                         console.log("login failed");
                     }
                 })
-            }else{
+            } 
+            else{
                 resolve({status:false})
                 console.log("failed");
             }
@@ -95,7 +109,6 @@ module.exports={
                 resolve({valid:false})
             }
             
-            
         })
     },
     phoneLogin:(phoneDetails)=>{
@@ -120,5 +133,57 @@ module.exports={
             }
             
         })
-    }
+    },
+
+    addJob:(jobDetails)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.JOB_COLLECTION).insertOne(jobDetails).then((response)=>{
+                resolve(response.ops[0]._id)
+            })
+        })
+    },
+
+    getJobs:(id)=>{
+        return new Promise(async(resolve,reject)=>{
+            let jobs =await db.get().collection(collections.JOB_COLLECTION).find({eid:id}).toArray()
+            console.log(jobs);
+            resolve(jobs)
+        })
+    },
+
+    editJob:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.JOB_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    updateJob:(id,userDetails)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.JOB_COLLECTION).findOneAndUpdate({_id:objectId(id)},{
+                $set:{
+                    name:userDetails.name,
+                    location:userDetails.location,
+                    designation:userDetails.designation,
+                    type:userDetails.type,
+                    skills:userDetails.skills,
+                    salary:userDetails.salary,
+                    description:userDetails.description,
+                    experience:userDetails.experience,
+                    language:userDetails.language,
+                    pin:userDetails.pin,
+                    qualification:userDetails.qualification,
+                }
+            }).then((response)=>{
+                resolve()
+            })
+        })
+    },
+    deleteJob:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.JOB_COLLECTION).removeOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
 }

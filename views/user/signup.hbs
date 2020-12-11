@@ -33,7 +33,7 @@
 					<div class="main-icon">
 						<span class="fa fa-eercast"></span>
                         {{#if login}}
-                        <p style="color: red">Email Already Exists</p>
+                        <p style="color: red">Email/Mobile Already Exists</p>
                         {{/if}}
 					</div>
 					<div class="header-left-bottom">
@@ -53,6 +53,7 @@
                             <div class="icon1">
 								<span class="fa fa-phone"></span>
 								<input type="tel" placeholder="Mobile No" required="" name="phone" />
+								<input type="hidden" value="0" name="block" />
 							</div>
 							<div class="bottom">
 								<button class="btn">Create</button>

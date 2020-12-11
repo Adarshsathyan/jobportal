@@ -30,7 +30,7 @@
 					<div class="main-icon">
 						<span class="fa fa-eecast"></span>
                         {{#if login}}
-                        <p style="color: red">Email Already Exists</p>
+                        <p style="color: red">Email/Mobile Already Exists</p>
                         {{/if}}
 					</div>
 					<div class="header-left-bottom">
@@ -41,7 +41,7 @@
 							</div>
 							<div class="icon1">
 								<span class="fa fa-envelope"></span>
-								<input type="email" placeholder="email" required="" name="username" />
+								<input type="email" placeholder="usernam/email" required="" name="username" />
 							</div>
                             <div class="icon1">
 								<span class="fa fa-lock"></span>
@@ -50,6 +50,7 @@
                             <div class="icon1">
 								<span class="fa fa-phone"></span>
 								<input type="tel" placeholder="mobile" required="" name="mobile" />
+								<input type="hidden" value="0" required="" name="block" />
 							</div>
 							<div class="bottom">
 								<button class="btn">Create</button>

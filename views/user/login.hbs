@@ -35,7 +35,9 @@
 							{{#if login}}
                         <p style="color: red">Invalid username or Password</p>
                         {{/if}}									
-
+						{{#if block}}
+						<p style="color: red">You Have been Blocked</p>
+						{{/if}}
 					</div>
 					<div class="header-left-bottom">
 						<form action="/login" method="post">

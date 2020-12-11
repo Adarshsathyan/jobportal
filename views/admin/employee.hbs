@@ -41,11 +41,11 @@
                                                 <td>{{this.name}}</td>
                                                 <td>{{this.username}}</td>
                                                 <td>{{this.mobile}}</td>
-                                               
                                                 <td><a class="btn btn-primary">View</a>
-                                                    <a class="btn btn-success">Edit</a>
-                                                    <a class="btn btn-danger">Delete</a>
-                                                    <a href="/admin/block/{{this._id}}"class="btn btn-warning">Block</a></td>
+                                                    <a class="btn btn-success" href="/admin/edit/{{this._id}}">Edit</a>
+                                                    <a class="btn btn-danger" href="/admin/delete/{{this._id}}">Delete</a>
+                                                    <a href="/admin/block/{{this._id}}"class="btn btn-warning">Block</a>
+                                                </td>
                                             </tr>
                                             {{/each}}
                                             
