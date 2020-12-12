@@ -23,46 +23,34 @@
             <div class="row">
                 <div class="col-lg-4">
                     <form action="#">
-
-
                         <h5 style="margin-bottom: 15px">Category</h5>
 
                         <div>
                             <label>
                                 <input type="checkbox">
-
                                 <span>Accounting & Finance(5)</span>
                             </label>
                         </div>
-
                         <div>
                             <label>
                                 <input type="checkbox">
-
                                 <span>FrontEnd Development(5)</span>
                             </label>
                         </div>
-
                         <div>
                             <label>
                                 <input type="checkbox">
-
                                 <span>Backend Development(7)</span>
                             </label>
                         </div>
-
                         <br>
-
                         <h5 style="margin-bottom: 15px">location</h5>
-
                         <div>
                             <label>
                                 <input type="checkbox">
-
                                 <span>Kerala</span>
                             </label>
                         </div>
-
                         <div>
                             <label>
                                 <input type="checkbox">
@@ -70,140 +58,42 @@
                                 <span>Banglore</span>
                             </label>
                         </div>
-
                         <div>
                             <label>
                                 <input type="checkbox">
-
                                 <span>Hyderabad</span>
                             </label>
                         </div>
-
                         <br>
-
-
                     </form>
-
                     <br>
                 </div>
 
                 <div class="col-lg-8">
                     <div class="row">
+                        {{#each jobs}}
                         <div class="col-md-6">
                             <div class="trainer-item">
                                 <div class="image-thumb">
-                                    <img src="user/images/product-1-720x480.jpg" alt="">
+                                    <img src="/employee/job_images/{{this._id}}.jpg" style="width: 353px; height:326px;" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
+                                    <span> <sup>$</sup>{{this.salary}}</span>
 
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+                                    <h4>{{this.designation}}</h4>
 
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+                                    <!--<p>Medical &nbsp;/&nbsp; Health Jobs</p>-->
 
                                     <ul class="social-icons">
-                                        <li><a href="/jobdetails">+ View More</a></li>
+                                        <li><a href="/jobdetails/{{this._id}}">+ View More</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="user/images/product-2-720x480.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="user/images/product-3-720x480.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="user/images/product-4-720x480.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="user/images/product-5-720x480.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="trainer-item">
-                                <div class="image-thumb">
-                                    <img src="user/images/product-6-720x480.jpg" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span> <sup>$</sup>70 000 </span>
-
-                                    <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-                                    <p>Medical &nbsp;/&nbsp; Health Jobs</p>
-
-                                    <ul class="social-icons">
-                                        <li><a href="job-details.html">+ View More</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        {{/each}}
                     </div>
                 </div>
             </div>
-
-
-
             <br>
 
             <nav>

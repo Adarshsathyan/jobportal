@@ -2,6 +2,7 @@ var db=require('../config/connection')
 var bcrypt=require('bcrypt')
 var collections=require('../config/collections')
 var otpAuth=require('../config/otpauth')
+const objectId=require("mongodb").ObjectID
 const twilio=require('twilio')(otpAuth.accountSId,otpAuth.authToken)
 
 module.exports={
@@ -126,6 +127,24 @@ module.exports={
                 resolve(status=false)
             }
             
+        })
+    },
+    getAllJobs:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let jobs =await db.get().collection(collections.JOB_COLLECTION).find().toArray()
+            resolve(jobs)
+        })
+    },
+
+    getJobDetails:(id)=>{
+        return new Promise(async(resolve,reject)=>{
+            let result={}
+            let job= await db.get().collection(collections.JOB_COLLECTION).findOne({_id:objectId(id)})
+            let employee = await db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({_id:objectId(job.eid)})
+            result.jobdetails=job
+            result.employee=employee
+            resolve(result)
+  
         })
     }
 }

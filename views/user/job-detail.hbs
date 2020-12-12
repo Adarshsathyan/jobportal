@@ -1,0 +1,92 @@
+<section class="section section-bg" id="call-to-action" style="background-image: url(/employee/job_images/{{job.jobdetails._id}}.jpg)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <br>
+                        <br>
+                        <h2><em>{{job.jobdetails.salary}}/-</em></h2>
+                        <p>{{job.jobdetails.designation}}</p>
+
+                        <div class="main-button">
+                          <a href="#">Apply for this Job</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Call to Action End ***** -->
+
+    <!-- ***** Fleet Starts ***** -->
+    <section class="section" id="trainers">
+        <div class="container">
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div class="row" id="tabs">
+              <div class="col-lg-4">
+                <ul>
+                  <li><a href='#tabs-1'><i class="fa fa-cog"></i> Job Details</a></li>
+                 <!-- <li><a href='#tabs-2'><i class="fa fa-info-circle"></i> About Employer</a></li>-->
+                  <li><a href='#tabs-3'><i class="fa fa-phone"></i> Contact Details</a></li>
+                </ul>
+              </div>
+              <div class="col-lg-8">
+                <section class='tabs-content' style="width: 100%;">
+                  <article id='tabs-1'>
+                    <h4>{{job.jobdetails.designation}}</h4>
+                    <p class="btn btn-danger text-white">{{job.jobdetails.type}}</p>
+                    <h4>Job Description</h4>
+                    <p>{{job.jobdetails.description}}</p>
+                    <h4>Requirements</h4>
+                    <h6 style="margin: 10px" >Job Type :<span style="margin-left:83px ;">{{job.jobdetails.type}}</span> </h6>
+                    <h6 style="margin: 10px">Experience :<span style="margin-left:69px ;">{{job.jobdetails.experience}}</span> </h6>
+                    <h6 style="margin: 10px">Language :<span style="margin-left:77px ;">{{job.jobdetails.language}}</span> </h6>
+                    <h6 style="margin: 10px">Qualification :<span style="margin-left:54px ;">{{job.jobdetails.qualification}}</span> </h6>
+                    <h6 style="margin: 10px">Required Skills :<span style="margin-left:43px ;">{{job.jobdetails.skills}}</span> </h6>
+                    <h6 style="margin: 10px">Salary :<span style="margin-left:109px ;">{{job.jobdetails.salary}}/-</span> </h6>
+                  </article>
+
+                 <!-- <article id='tabs-2'>
+                    <h4>{{job.name}}</h4>
+
+                    <p class="lead"> <i class="fa fa-map-marker"></i> {{job.location}} </p>
+                    <p></p>
+                   </article>-->
+
+                  <article id='tabs-3'>
+                    <h4>Contact Details</h4>
+
+                    <div class="row">   
+                        <div class="col-sm-6">
+                            <label>Name</label>
+
+                            <p>{{job.employee.name}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Phone</label>
+
+                            <p>{{job.employee.mobile}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Address</label>
+                            <p>{{job.employee.address}}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Email</label>
+                            <p><a href="#">{{job.employee.username}}</a></p>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>Website</label>
+                            <p><a href="{{job.employee.website}}">{{job.employee.website}}</a></p>
+                        </div>
+                    </div>
+                  </article>
+                </section>
+              </div>
+            </div>
+        </div>
+    </section>

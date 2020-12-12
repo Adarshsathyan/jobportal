@@ -14,7 +14,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/jobs', function(req, res, next) {
-  res.render('user/jobs',{layout:'./layoutuser'});
+  userHelper.getAllJobs().then((jobs)=>{
+    res.render('user/jobs',{layout:'./layoutuser',jobs:jobs});
+  })
+  
+});
+router.get('/jobdetails/:id', function(req, res, next) {
+  userHelper.getJobDetails(req.params.id).then((jobdetail)=>{
+    console.log(jobdetail);
+    res.render('user/job-detail',{layout:'./layoutuser',job:jobdetail});
+  })
+  
 });
 
 router.get('/login', function(req, res, next) {
