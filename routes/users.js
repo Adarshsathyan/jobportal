@@ -80,7 +80,7 @@ router.get('/phone-login', function(req, res, next) {
 router.post('/phone-login', function(req, res, next) {
   userHelper.phoneLogin(req.body).then((data)=>{
     if(data.valid===false){
-      req.session.phone=req.body.mobile
+      req.session.phone=req.body.phone
       res.redirect('/verify')
     }else{
       req.session.signErr=true 
@@ -102,7 +102,7 @@ router.post('/phone-signup', function(req, res, next) {
     console.log(result.status);
     if(result.status){
       req.session.signedIn=true
-      req.session.phone=req.body.mobile
+      req.session.phone=req.body.phone
       res.redirect('/verify')
     }else{
       req.session.err=true

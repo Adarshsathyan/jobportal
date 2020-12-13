@@ -56,9 +56,9 @@ module.exports={
     },
     phoneSignup:(details)=>{
         return new Promise(async(resolve,reject)=>{
-            let p = details.mobile
-            let puser=await db.get().collection(collections.USER_COLLECTION).findOne({mobile:p})
-            
+            let p = details.phone
+            let puser=await db.get().collection(collections.USER_COLLECTION).findOne({phone:p})
+            console.log(puser);
             if(puser){
                 resolve(status=false)
             }else{
@@ -68,7 +68,7 @@ module.exports={
                         .services(otpAuth.serviceID)
                         .verifications
                         .create({
-                            to:"+91"+details.mobile,
+                            to:"+91"+details.phone,
                             channel:"sms"
                         }  
                         ).then((data)=>{
@@ -86,6 +86,7 @@ module.exports={
             let puser=await db.get().collection(collections.USER_COLLECTION).findOne({phone:mobilenum})
             response.user=puser
             response.valid=true
+            console.log(puser);
             twilio
                 .verify
                 .services(otpAuth.serviceID)
@@ -106,7 +107,7 @@ module.exports={
     },
     phoneLogin:(phoneDetails)=>{
         return new Promise(async(resolve,reject)=>{
-            let p = phoneDetails.mobile
+            let p = phoneDetails.phone
             let puser=await db.get().collection(collections.USER_COLLECTION).findOne({phone:p})
             console.log(p);
             console.log(puser);
@@ -117,7 +118,7 @@ module.exports={
                     .services(otpAuth.serviceID)
                     .verifications
                     .create({
-                        to:"+91"+phoneDetails.mobile,
+                        to:"+91"+phoneDetails.phone,
                         channel:"sms"
                     }  
                     ).then((data)=>{ 
