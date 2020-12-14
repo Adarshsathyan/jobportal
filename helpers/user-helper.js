@@ -147,5 +147,19 @@ module.exports={
             resolve(result)
   
         })
+    },
+    apply:(id)=>{
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collections.JOB_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    applyJob:(application)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).insertOne(application).then((result)=>{
+                resolve(result.ops[0]._id)
+            })
+        })
     }
 }

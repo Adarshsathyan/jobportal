@@ -143,4 +143,25 @@ router.get('/jobdetails', function(req, res, next) {
 router.get('/contact', function(req, res, next) {
   res.render('user/contact',{layout:'./layoutuser'});
 });
+
+
+router.get('/apply/:id', function(req, res) {
+  userHelper.apply(req.params.id).then((result)=>{
+    res.render('user/apply',{layout:'./layoutuser',job:result});
+  })
+  
+});
+
+router.post('/apply/', function(req, res) {
+  userHelper.applyJob(req.body).then((id)=>{
+    console.log(req.body);
+    let image=req.files.image
+    let resume=req.files.resume
+    image.mv('./public/application/userphotos/'+id+'.jpg')
+    resume.mv('./public/application/user-resumes/'+id+'.pdf')
+    res.redirect('/')
+  })
+  
+});
+
 module.exports = router;
