@@ -1,0 +1,59 @@
+<div id="page-wrapper">
+    <div class="header">
+        <h2 class="page-header mb-5">
+           <center>Profile</center>
+        </h2>
+      
+    </div>
+    <div class="container">
+        <div class="wrapper ">
+           
+            <div class="right">
+                <div class="info">
+                    <h3>Information</h3>
+                    <div class="info_data">
+                        <div class="data">
+                            <h4>Name</h4>
+                            <p>{{employeeUser.name}}</p>
+                        </div>
+                        <div class="data">
+                            <h4>Phone</h4>
+                            <p>{{employeeUser.mobile}}</p>
+                        </div>
+                        <div class="data">
+                            <h4>Email</h4>
+                            <p>{{employeeUser.username}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="projects">
+                    <h3>Address</h3>
+                    <div class="projects_data">
+                        <div class="data">
+                            <h4>Location</h4>
+                            <p>{{employeeUser.address}}</p>
+                        </div>
+                        <div class="data">
+                            <h4>Website</h4>
+                            <p>{{employeeUser.website}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="social_media">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"></a><i class="fa fa-twitter"></i></li>
+                        <li><a href="#"></a><i class="fa fa-instagram"></i></li>
+
+                    </ul>
+                </div>
+            </div>
+             <div class="left">
+                <img src="/user/images/profile.jpg" alt="user" width="300">
+                <h4>{{employeeUser.name}}</h4>
+                <p>{{employeeUser.website}}</p>
+                <a href="/employee/editprofile/{{employeeUser._id}}" class="btn btn-danger  ">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>

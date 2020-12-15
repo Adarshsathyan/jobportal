@@ -186,4 +186,34 @@ module.exports={
             })
         })
     },
+    getProfile:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    editEmployee:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    updateEmployee:(id,empdetails)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.EMPLOYEE_COLLECTION).findOneAndUpdate({_id:objectId(id)},{$set:{
+                name:empdetails.name,
+                username:empdetails.username,
+                mobile:empdetails.mobile,
+                website:empdetails.website,
+                address:empdetails.address
+            }}).then(()=>{
+                db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                    resolve(result)
+                })
+                
+            })
+        })
+    },
 }

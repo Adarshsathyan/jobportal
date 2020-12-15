@@ -15,16 +15,15 @@ router.get('/', function(req, res, next) {
 
 router.get('/jobs', function(req, res, next) {
   userHelper.getAllJobs().then((jobs)=>{
-    res.render('user/jobs',{layout:'./layoutuser',jobs:jobs});
+    res.render('user/jobs',{layout:'./layoutuser',jobs:jobs,user:req.session.user});
   })
   
 });
 router.get('/jobdetails/:id', function(req, res, next) {
   userHelper.getJobDetails(req.params.id).then((jobdetail)=>{
     console.log(jobdetail);
-    res.render('user/job-detail',{layout:'./layoutuser',job:jobdetail});
+    res.render('user/job-detail',{layout:'./layoutuser',job:jobdetail,user:req.session.user});
   })
-  
 });
 
 router.get('/login', function(req, res, next) {
@@ -61,7 +60,7 @@ router.get('/signup', function(req, res, next) {
     req.session.signErr=false
   }
 });
-router.post('/signup', function(req, res, next) {
+router.post('/signup', function(req, res) {
   userHelper.userSignup(req.body).then((response)=>{
     if(response.name){
       req.session.userloggedIn=true
@@ -115,7 +114,7 @@ router.get('/verify', function(req, res, next) {
   if(req.session.userloggedIn){
     res.redirect('/')
   }else{
-    res.render('user/verify',{layout:null,login:req.session.logErr});
+    res.render('user/verify',{layout:null,login:req.session.logErr,user:req.session.user});
     req.session.logErr=false
   }
 });
@@ -133,22 +132,27 @@ router.post('/verify', function(req, res) {
   })
 });
 router.get('/about', function(req, res, next) {
-  res.render('user/about',{layout:'./layoutuser'});
+  res.render('user/about',{layout:'./layoutuser',user:req.session.user});
 });
 
 router.get('/jobdetails', function(req, res, next) {
-  res.render('user/job-details',{layout:'./layoutuser'});
+  res.render('user/job-details',{layout:'./layoutuser',user:req.session.user});
 });
 
 router.get('/contact', function(req, res, next) {
-  res.render('user/contact',{layout:'./layoutuser'});
+  res.render('user/contact',{layout:'./layoutuser',user:req.session.user});
 });
 
 
 router.get('/apply/:id', function(req, res) {
-  userHelper.apply(req.params.id).then((result)=>{
-    res.render('user/apply',{layout:'./layoutuser',job:result});
-  })
+  if(req.session.userloggedIn){
+    userHelper.apply(req.params.id).then((result)=>{
+      res.render('user/apply',{layout:'./layoutuser',job:result,user:req.session.user});
+    })
+  }else{
+    res.redirect('/login')
+  }
+  
   
 });
 
@@ -161,7 +165,6 @@ router.post('/apply/', function(req, res) {
     resume.mv('./public/application/user-resumes/'+id+'.pdf')
     res.redirect('/')
   })
-  
 });
 
 module.exports = router;

@@ -212,5 +212,33 @@ router.get('/deletejob/:id',function(req,res){
   })
 });
 
+router.get('/profile',function(req,res){
+  if(req.session.emploggedIn){
+      res.render('employee/profile',{employee:true,employeeUser:req.session.employe})
+  }else{
+    res.redirect('/employee')
+  }
+ 
+})
+router.get('/editprofile/:id',function(req,res){
+  if(req.session.emploggedIn){
+    employeeHelper.editEmployee(req.params.id).then((employee)=>{
+      res.render('employee/profile-edit',{employee:true,employeeUser:req.session.employe,employee})
+    })
+    
+  }else{
+    res.redirect('/employee')
+  }
+  
+})
+
+router.post('/editprofile/:id',function(req,res){
+    employeeHelper.updateEmployee(req.params.id,req.body).then((employee)=>{
+      req.session.employe=null
+      req.session.employe=employee
+     res.redirect('/employee/profile')
+    }) 
+})
+
 
 module.exports = router;
