@@ -167,4 +167,36 @@ router.post('/apply/', function(req, res) {
   })
 });
 
+router.get('/profile', function(req, res, next) {
+  if(req.session.userloggedIn){
+    res.render('user/profile',{layout:'./layoutuser',user:req.session.user});
+  }else{
+    res.redirect('/login')
+  }
+  
+});
+router.get('/editprofile/', function(req, res, next) {
+  if(req.session.userloggedIn){
+    res.render('user/edit-profile',{layout:'./layoutuser',user:req.session.user});
+  }else{
+    res.redirect('/login')
+  }
+  
+});
+router.post('/updateprofile/:id', function(req, res, next) {
+  userHelper.updateUser(req.params.id,req.body).then((result)=>{
+    req.session.user=result
+    if(req.files){
+      let image=req.files.image
+    image.mv('./public/user/userimages/'+req.params.id+'.jpg')
+    }
+    
+    res.redirect('/profile')
+  
+  })
+});
+
+
+
+
 module.exports = router;

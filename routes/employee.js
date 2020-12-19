@@ -65,6 +65,8 @@ router.get('/logout',function(req,res){
 router.get('/jobs', function(req, res) {
   if(req.session.emploggedIn){
     employeeHelper.getJobs(req.session.employe._id).then((result)=>{
+      req.session.jobs=result
+    
       res.render('employee/jobs',{employee:true,employeeUser:req.session.employe,jobs:result});
     })
   }else{
@@ -75,7 +77,12 @@ router.get('/jobs', function(req, res) {
 
 router.get('/requests', function(req, res) {
   if(req.session.emploggedIn){
-    res.render('employee/requests',{employee:true,employeeUser:req.session.employe});
+  
+    employeeHelper.requests(req.session.employe._id).then((request)=>{
+      jobs=req.session.jobs
+      res.render('employee/requests',{employee:true,employeeUser:req.session.employe,request});
+    })
+    
   }else{
     res.redirect('/employee')
   }
@@ -238,6 +245,16 @@ router.post('/editprofile/:id',function(req,res){
       req.session.employe=employee
      res.redirect('/employee/profile')
     }) 
+})
+router.get('/viewresume/:id',function(req,res){
+  if(req.session.emploggedIn){
+    employeeHelper.viewResume(req.params.id).then((application)=>{
+      res.render('employee/view-resume',{employee:true,employeeUser:req.session.employe,application})
+    })
+    
+  }else{
+    res.redirect('/employee')
+  }
 })
 
 

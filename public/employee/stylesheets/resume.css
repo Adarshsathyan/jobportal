@@ -1,0 +1,72 @@
+.card1{
+    background-color: white;
+    height: 500px;
+    width: 400px;
+    position: absolute;
+    margin:auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 8px;
+    box-shadow:0 0 20p 10px rgba(233,144,7,0.7);
+
+}
+.info1{
+    height: 100%;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+}
+.name1{
+    font-size: 20px;
+    font-family: "Raleway";
+    color: #f79f08;
+    position: absolute;
+    letter-spacing: 2px;
+    font-weight: 600;
+    top: 146px;
+}
+.prof{
+    font-size: 18px;
+    position: absolute;
+    top: 172px;
+    font-family: "Work Sans";
+    color: #555555;
+
+}
+.divider{
+    background-color: #949594;
+    height: 1.5px;
+    width: 50px;
+    position: absolute;
+    top: 200px;
+}
+.bio{
+    
+    margin-top: 200px;
+    color: #949594;
+    font-size: 18px;
+    font-family: "Work Sans",sans-serif;
+    line-height: 28px;
+    
+}
+.bn{
+    position: absolute;
+    bottom: 30px;
+    background-color: #f79f08;
+    border:none;
+    font-size: 20px;
+    padding: 13px 25px;
+    color: white;
+    font-family: sans-serif;
+}
+.pic{
+    background-size: 100% 150%;
+    background-position:0 125px ;
+
+}
+.photo{
+    width: 150px;
+    height: 150px;
+}

@@ -31,13 +31,17 @@ module.exports={
             let blockResponse={}
             let response={}
             let user=await db.get().collection(collections.USER_COLLECTION).findOne({username:userData.username})
-            block=user.block
-            if(block === "1"){
+            //block=user.block
+            if(!user){
+                resolve({status:false})
+            }
+            
+            else if(user.block === "1"){
                 console.log("user Blocked");
                 blockResponse.status=false
                 blockResponse.user=user
                 resolve(blockResponse)
-            }else if(user){
+            }else if(user.password){
                 bcrypt.compare(userData.password,user.password).then((status)=>{
                     if(status){
                         response.user=user
@@ -159,6 +163,29 @@ module.exports={
         return new Promise((resolve,reject)=>{
             db.get().collection(collections.APPLICATION_COLLECTION).insertOne(application).then((result)=>{
                 resolve(result.ops[0]._id)
+            })
+        })
+    },
+    updateUser:(id,userDetails)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.USER_COLLECTION).updateOne({_id:objectId(id)},{$set:{
+                name:userDetails.name,
+                email:userDetails.username,
+                phone:userDetails.phone,
+                link:userDetails.link,
+                image:userDetails.image,
+                location:userDetails.location,
+                skills:userDetails.skills,
+                qualifications:userDetails.qualifications,
+                experience:userDetails.experience,
+                about:userDetails.about,
+                fb:userDetails.fb,
+                twitter:userDetails.twitter,
+                insta:userDetails.insta
+            }}).then((response)=>{
+                db.get().collection(collections.USER_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                    resolve(result)
+                })
             })
         })
     }

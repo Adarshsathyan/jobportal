@@ -24,7 +24,7 @@ module.exports={
     //admin authentication
     adminAuth:(adminData)=>{
         return new Promise(async(resolve,reject)=>{
-            let loginStatus=false
+            //let loginStatus=false
             let response={}
             let admin=await db.get().collection(collections.ADMIN_COLLECTION).findOne({username:adminData.username}) 
             if(admin){

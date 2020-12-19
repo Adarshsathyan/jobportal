@@ -1,52 +1,64 @@
- <div id="js-preloader" class="js-preloader">
-      <div class="preloader-inner">
+<div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
         <span class="dot"></span>
         <div class="dots">
-          <span></span>
-          <span></span>
-          <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-      </div>
     </div>
-    <!-- ***** Preloader End ***** -->
-    
-    
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="/" class="logo">Job<em> ON</em></a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul class="nav">
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/jobs">Jobs</a></li>
-                            <li><a href="/about">About Us</a></li>
-                            <li><a href="">Category</a></li> 
-                            <li><a href="/contact">Contact</a></li>
-                            {{#if user}} 
-                            {{else}}
-                            <li><a href="/employee">Post Job</a></li>
-                            {{/if}}
-                            {{#if user}}  
-                            <li><a href="/logout">Logout</a></li> 
-                            {{else}}
-                             <li><a href="/login">Login</a></li> 
-                             {{/if}}
-                             {{#if user}}  
-                            <li><a>{{user.name}}</a></li> 
-                            {{else}}
-                            {{/if}}
-                        </ul>        
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="/" class="logo">Job<em> ON</em></a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/jobs">Jobs</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="">Category</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        {{#if user}}
+                        {{else}}
+                        <li><a href="/employee">Post Job</a></li>
+                        {{/if}}
+                        {{#if user}}
+                        <li><a href="/logout"></a></li>
+                        {{else}}
+                        <li><a href="/login">Login</a></li>
+                        {{/if}}
+                        {{#if user}}
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   <i class="fa fa-user"></i>   {{user.name}}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="/profile">My Account</a>
+                                    <a class="dropdown-item" href="/logout">logout</a>
+                                    
+                                </div>
+                            </div>
+                        </li>
+                        {{else}}
+                        {{/if}}
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
             </div>
         </div>
-    </header>
+    </div>
+</header>

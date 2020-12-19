@@ -31,14 +31,30 @@
                         <label>Email:</label>
                         <input type="email" class="form-control" name="email" required>
                          <input type="hidden" name="eid" value="{{job.eid}}">
+                         <input type="hidden" name="uid" value="{{user._id}}">
+                         <input type="hidden" name="jid" value="{{job._id}}">
+                         <input type="hidden" name="designation" value="{{job.designation}}">
+                         <input type="hidden" name="type" value="{{job.type}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Describe about you shortly</label>
+                        <textarea  class="form-control" name="about" required></textarea>
                     </div>
                     <div class="form-group">
                         <label>Proffesion Title:</label>
                         <input type="text" class="form-control" name="title" required>
                     </div>
                     <div class="form-group">
-                        <label>Website/Portfolio link:</label>
-                        <input type="text" class="form-control" name="link" required>
+                        <label>Experience</label>
+                        <input type="text" class="form-control" name="experience" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Previous Work(optional)</label>
+                        <input type="text" class="form-control" name="worked" >
+                    </div>
+                    <div class="form-group">
+                        <label>Website/Portfolio link:(optional)</label>
+                        <input type="text" class="form-control" name="link" >
                     </div>
                     <div class="form-group">
                         <label>Image:</label>
@@ -55,6 +71,10 @@
                     <div class="form-group">
                         <label>Skills:</label>
                         <input type="text" class="form-control" name="skills"required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        <input type="text" class="form-control" name="phone"required>
                     </div>
                     <button class="btn btn-primary">Apply</button>
                 </form>
