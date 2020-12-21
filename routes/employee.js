@@ -90,7 +90,10 @@ router.get('/requests', function(req, res) {
 });
 router.get('/approved', function(req, res) {
   if(req.session.emploggedIn){
-    res.render('employee/approved',{employee:true,employeeUser:req.session.employe});
+    employeeHelper.approvedReq(req.session.employe._id).then((approved)=>{
+      res.render('employee/approved',{employee:true,employeeUser:req.session.employe,approved});
+    })
+    
   }else{
     res.redirect('/employee')
   }
@@ -250,6 +253,37 @@ router.get('/viewresume/:id',function(req,res){
   if(req.session.emploggedIn){
     employeeHelper.viewResume(req.params.id).then((application)=>{
       res.render('employee/view-resume',{employee:true,employeeUser:req.session.employe,application})
+    })
+    
+  }else{
+    res.redirect('/employee')
+  }
+})
+router.get('/approve/:id',function(req,res){
+  if(req.session.emploggedIn){
+    employeeHelper.approve(req.params.id).then((application)=>{
+      res.redirect('/employee/requests')
+    })
+    
+  }else{
+    res.redirect('/employee')
+  }
+})
+router.get('/reject/:id',function(req,res){
+  if(req.session.emploggedIn){
+    employeeHelper.reject(req.params.id).then(()=>{
+      res.redirect('/employee/requests')
+    })
+    
+  }else{
+    res.redirect('/employee')
+  }
+})
+router.get('/userprofile/:id',function(req,res){
+  if(req.session.emploggedIn){
+    employeeHelper.viewUser(req.params.id).then((user)=>{
+      req.session.noEdit=true
+      res.render('user/profile',{layout:'./layoutuser',user,noedit:true})
     })
     
   }else{

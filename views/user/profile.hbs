@@ -1,5 +1,5 @@
 <section class="section section-bg" id="call-to-action"
-    style="background-image: url(user/images/banner-image-1-1920x500.jpg)">
+    style="background-image: url(/user/images/banner-image-1-1920x500.jpg)">
     <div class="container">
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
@@ -24,86 +24,65 @@
     <div class="container">
         <div class="row">
             <div class="wrapper">
-                <div class="right">
-                    <div class="info">
-                        <h3>Information</h3>
-                        <div class="info_data">
-                            <div class="data">
-                                <h4>Name</h4>
-                                <p>{{user.name}}</p>
-                            </div>
-                            <div class="data">
-                                <h4>Phone</h4>
-                                <p>{{user.phone}}</p>
-                            </div>
-                            <div class="data">
-                                <h4>Email</h4>
-                                <p>{{user.username}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="projects">
-                        <h3>Address</h3>
-                        <div class="projects_data">
-                            <div class="data">
-                                <h4>Location</h4>
-                                <p>{{user.location}}</p>
-                            </div>
-                            <div class="data">
-                                <h4>Website</h4>
-                                <p>{{user.link}}</p>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="projects">
-                        <h3>About</h3>
-                        <div class="projects_data">
-                            <div class="data">
-                                <h4>Skills</h4>
-                                <p>{{user.skills}}</p>
-                            </div>
-                            <div class="data ml-5">
-                                <h4>Education</h4>
-                                <p>{{user.qualifications}}</p>
-                            </div>
-                             <div class="data ml-5">
-                                <h4>Experience</h4>
-                                <p>{{user.experience}}</p>
-                            </div>
-                        </div>
-                    </div>
-                   <div class="social_media">
-                    <ul>
-                        {{#if user.fb}}
-                        <li><a href="{{user.fb}}"><i class="fa fa-facebook"></i></a></li>
-                        {{else}}
-                        {{/if}}
-                        {{#if user.twitter}}
-                        <li><a href="{{user.twitter}}"><i class="fa fa-twitter"></i></a></li>
-                        {{else}}
-                        {{/if}}
-                        {{#if user.insta}}
-                        <li><a href="{{user.insta}}"><i class="fa fa-instagram"></i></a></li>
-                        {{else}}
-                        {{/if}}
-                    </ul>
-                </div>
-                </div>
                 <div class="left">
 
                     <img src="/user/userimages/{{user._id}}.jpg" alt="Please add A Profile" width="300">
                     <h4>{{user.name}}</h4>
                     <p>{{user.link}}</p>
                     <p>{{user.about}}</p>
+                    <a href="/application/user-resumes/5fdb7b0fedfe4d3a5c391a4b.pdf" download="resume" class="btn btn-danger mt-5">Download Resume</a>
+                    {{#if noedit}}
+
+                    {{else}}
                     <a href="/editprofile" class="btn btn-danger mt-5">Edit profile</a>
+                    {{/if}}               
                 </div>
+                <div class="right">
+                    <div class="info">
+                        <h4>{{user.name}}</h4>
+                        <p>{{user.about}}</p>
+                    </div>
+                    <div class="projects">
+                        <h4>Skills</h4>
+                        <p>{{user.skills}}</p>
+                    </div>
+                    <div class="projects">
+                        <h4>Education</h4>
+                        <p>{{user.qualifications}}</p>
+                    </div>
+                    <div class="projects">
+                        <h4>Experience</h4>
+                        <p>{{user.experience}}</p>
+                    </div>
+                    <div class="projects">
+                        <h4>Location</h4>
+                        <p>{{user.location}}</p>
+                    </div>
+                    <div class="projects">
+                        <h4>Contact</h4>
+                        <p>{{user.email}}</p>
+                        <p>{{user.phone}}</p>
+                    </div>
+                   <div class="social_media">
+                    <ul>
+                        {{#if user.linkedin}}
+                        <li><a href="{{user.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
+                        {{else}}
+                        {{/if}}
+                        {{#if user.link}}
+                        <li><a href="{{user.link}}"><i class="fa fa-link"></i></a></li>
+                        {{else}}
+                        {{/if}}
+                    </ul>
+                </div>
+                </div>
+                
             </div>
             
         </div>
         <div >
             <h4 class="text-center "style="margin-bottom: 30px;">BUILD PROFILE TO GET HIRED</h4>
-        <center><img src="user/images/line-dec.png" alt=""></center>
+        <center><img src="/user/images/line-dec.png" alt=""></center>
         </div>
          
     </div>

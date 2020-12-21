@@ -36,6 +36,12 @@
                             <input type="text" class="form-control col-md" id="Qualification" name="qualification" value="{{job.qualification}}"
                                 placeholder="Qualification">
                         </div>
+                        <div class="col-md-12 form-group ">
+                            <label style="color: black;">Company Logo</label>
+                            <img src="/employee/job_logo/{{job._id}}.jpg" alt="" style="width:60px;height:60px; margin-bottom:5px;">
+                            <input type="file"  id="logo" name="logo" value=""
+                                placeholder="logo">
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="col-md-12 form-group ">
@@ -55,8 +61,8 @@
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Description</label>
-                                 <input type="text" class="form-control" id="Descriptio" name="description" value="{{job.description}}"
-                                placeholder="Description">
+                                 <textarea  class="form-control" id="Descriptio" name="description" 
+                                placeholder="Description">{{job.description}}</textarea>
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Salary</label>
@@ -78,6 +84,7 @@
                         </div>
                     </div>
                 </div>
+                
             </form>
         </div>
     </div>

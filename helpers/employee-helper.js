@@ -223,22 +223,8 @@ module.exports = {
         return new Promise((resolve, reject) => {
             reqDetails = {}
             
-            db.get().collection(collections.APPLICATION_COLLECTION).find({ eid: eid }).toArray().then((requests) => {
-                // reqDetails.requests = requests
-                // let n = requests.length
-        
+            db.get().collection(collections.APPLICATION_COLLECTION).find({ eid: eid,approve:"0" }).toArray().then((requests) => {
                 
-                // let obj={}
-                // Object.assign(obj,requests)
-                
-                
-
-                // db.get().collection(collections.JOB_COLLECTION).findOne({ _id: objectId(requests[0].jid) }).then((job) => {
-                //     reqDetails.job = job
-                //     console.log(job);
-                // })
-
-                console.log(reqDetails);
                 resolve(requests)
             })
 
@@ -248,6 +234,36 @@ module.exports = {
         return new Promise((resolve,reject)=>{
             db.get().collection(collections.APPLICATION_COLLECTION).findOne({_id:objectId(id)}).then((application)=>{
                 resolve(application)
+            })
+        })
+    },
+    approve:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).updateOne({_id:objectId(id)},{$set:{
+                approve:"1"
+            }}).then((response)=>{
+                resolve()
+            })
+        })
+    },
+    approvedReq:(eid)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).find({ eid: eid,approve:"1" }).toArray().then((requests) => {
+                resolve(requests)
+            })
+        })
+    },
+    reject:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).removeOne({_id:objectId(id)}).then((response)=>{
+                resolve()
+            })
+        })
+    },
+    viewUser:(uid)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.USER_COLLECTION).findOne({_id:objectId(uid)}).then((user)=>{
+                resolve(user)
             })
         })
     }

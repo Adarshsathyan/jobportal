@@ -11,7 +11,7 @@
                 <tr>
                     <td  bgcolor="#032147" style="color: white; padding:20px; width:30%;">
                         <img src="/application/userphotos/{{application._id}}.jpg" alt="" style="border-radius:50%; width:150px;height:150px;">
-                        <h1>Personal Details</h1>
+                        <h2 style="color:white;">Personal Details</h2>
                         <hr>
                         <p><b>Name:</b><br>
                            {{application.name}}<br>
@@ -45,6 +45,8 @@
                         <p>{{application.location}}</p><br>
                         <h3>Email</h3><hr>
                         <p>{{application.email}}</p>
+                        <br><br>
+                        <embed src="/application/user-resumes/{{application._id}}.pdf" type="application/pdf">
                     </td>
                 </tr>
             </table>
