@@ -3,6 +3,7 @@
         <h1 class="page-header mb-5">
             Jobs
         </h1>
+        
         <a href="/employee/addjob" class="btn btn-primary col-md-2" style="float: right; margin-right:37px;">Add Jobs <i class="fa fa-plus" aria-hidden="true"></i></a>
     </div>
     <div class="container" style="margin-top:62px;">
@@ -23,6 +24,7 @@
                         <li class="list-group-item" style="padding-bottom: 65px;">Image<span style="float: right;">
                             <img src="/employee/job_images/{{this._id}}.jpg" style="width:60px;height:60px; "></span></li>
                         <li class="list-group-item ml-auto mr-auto col-md-12">
+                              <a class="btn btn-primary col-md-3" href="/employee/viewjob/{{this._id}}" style="display: inline;float: left;">View</a>
                             <a class="btn btn-info col-md-3" href="/employee/editjob/{{this._id}}" style="display: inline;float: right;">Edit</a>
                             <a class="btn btn-danger col-md-3" href="/employee/deletejob/{{this._id}}" style="display: inline;float: right;margin-right:8px;">Delete</a>
                         </li>

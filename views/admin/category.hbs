@@ -1,0 +1,60 @@
+
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div class="header">
+                <h1 class="page-header">
+                    Category
+                </h1>
+                
+                 <a href="/admin/addcategory" class="btn btn-primary col-md-2" style="float: right; margin-right:37px;">Add Category <i class="fa fa-plus" aria-hidden="true"></i></a>
+
+
+            </div>
+
+            <div id="page-inner">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <div class="card-action">
+
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="blocked_users">
+                                        <thead>
+                                            <tr>
+                                                <th>Category</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each categories}}
+                                            <tr>
+                                                <td>{{this.category}}</td>
+                                                <td><a class="btn btn-danger">Delete</a></td>
+                                                    
+                                            </tr>
+                                            {{/each}}
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+        <!-- /. WRAPPER  -->
+        <!-- JS Scripts-->
+
+
+      

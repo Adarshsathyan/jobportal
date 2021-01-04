@@ -5,5 +5,8 @@ module.exports={
     USER_COLLECTION:'user',
     USER_PHONE_lOGIN:'user_phone_log',
     JOB_COLLECTION:'jobs',
-    APPLICATION_COLLECTION:'application'
+    APPLICATION_COLLECTION:'application',
+    CATEGORY_COLLECTION:'category',
+    PAYMENT_COLLECTION:'payment',
+    CONTACT_COLLECTION:'contact'
 }

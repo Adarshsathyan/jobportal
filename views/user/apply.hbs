@@ -7,8 +7,9 @@
                         <br>
                         <h2><em>Apply Here</em></h2>
                         <p>Fill the form</p>
-
-                       
+                        {{#if apply}}
+                         <h2><em>You have already applied for this job</em></h2>   
+                       {{/if}}
                     </div>
                 </div>
     </div>
@@ -22,14 +23,15 @@
         <div class="row">
 
             <div class="col-md-6">
+               
                 <form action="/apply" method="POST" enctype="multipart/form-data" >
                     <div class="form-group">
-                        <label>Full name:</label>
-                        <input type="text" class="form-control" name="name" required>
+                    
+                        <input type="hidden" class="form-control" name="name" value="{{user.name}}">
                     </div>
                     <div class="form-group">
-                        <label>Email:</label>
-                        <input type="email" class="form-control" name="email" required>
+                       
+                        <input type="hidden"  name="email" value="{{user.username}}">
                          <input type="hidden" name="eid" value="{{job.eid}}">
                          <input type="hidden" name="uid" value="{{user._id}}">
                          <input type="hidden" name="jid" value="{{job._id}}">
@@ -40,43 +42,31 @@
                     </div>
                     <div class="form-group">
                         <label>Describe about you shortly</label>
-                        <textarea  class="form-control" name="about" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Proffesion Title:</label>
-                        <input type="text" class="form-control" name="title" required>
+                        <textarea  class="form-control" name="about" required>{{user.about}}</textarea>
                     </div>
                     <div class="form-group">
                         <label>Experience</label>
-                        <input type="text" class="form-control" name="experience" required>
+                        <input type="text" class="form-control" name="experience" value="{{user.experience}}" required>
                     </div>
                     <div class="form-group">
                         <label>Previous Work(optional)</label>
-                        <input type="text" class="form-control" name="worked" >
+                        <input type="text" class="form-control" name="worked" value="{{user.worked}}" >
                     </div>
                     <div class="form-group">
                         <label>Website/Portfolio link:(optional)</label>
-                        <input type="text" class="form-control" name="link" >
-                    </div>
-                    <div class="form-group">
-                        <label>Image:</label>
-                        <input type="file" class="form-control  btn btn-primary" name="image" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Resume:</label>
-                        <input type="file" class="form-control btn btn-primary" name="resume" required>
+                        <input type="text" class="form-control" name="link" value="{{user.link}}" >
                     </div>
                     <div class="form-group">
                         <label>Location :</label>
-                        <input type="text" class="form-control" name="location" required>
+                        <input type="text" class="form-control" name="location" value="{{user.location}}" required>
                     </div>
                     <div class="form-group">
                         <label>Skills:</label>
-                        <input type="text" class="form-control" name="skills"required>
+                        <input type="text" class="form-control" name="skills"required value="{{user.skills}}">
                     </div>
                     <div class="form-group">
                         <label>Mobile</label>
-                        <input type="text" class="form-control" name="phone"required>
+                        <input type="text" class="form-control" name="phone"required value="{{user.phone}}">
                     </div>
                     <button class="btn btn-primary">Apply</button>
                 </form>
@@ -104,6 +94,10 @@
                     <h6>Salary :<span style="margin-left:109px ;">{{job.salary}}/-</span> </h6>
                     <br>
                   </article>
+                   {{#each reject}}
+                                    <p class="fa fa-dot-circle-o text-danger show">Your application for {{this.designation}} have been rejected by {{this.companyname}}</p><br>
+                                    {{/each}}
+                                    
             </div>
             
         </div>

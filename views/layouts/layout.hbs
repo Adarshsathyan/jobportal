@@ -12,12 +12,15 @@
     <link href="stylesheets/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
     <link href="stylesheets/font-awesome.css" rel="stylesheet" />
-
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
     <!-- Custom Styles-->
     <link href="stylesheets/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+    
+    
 </head>
 
 <body>
@@ -25,8 +28,9 @@
     {{>admin-header}}
     
     {{{body}}}
+    
     <script src="javascripts/jquery-1.10.2.js"></script>
-
+    
     <!-- Bootstrap Js -->
     <script src="javascripts/bootstrap.min.js"></script>
 
@@ -39,7 +43,16 @@
     <script src="javascripts/dataTables/dataTables.bootstrap.js"></script>
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
+            $('#user_details').dataTable();
+        });
+        $(document).ready(function () {
+            $('#employee_details').dataTable();
+        });
+        $(document).ready(function () {
+            $('#blocked_employees').dataTable();
+        });
+        $(document).ready(function () {
+            $('#blocked_users').dataTable();
         });
     </script>
 
@@ -57,20 +70,31 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>Employee</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/admin/materialize/css/materialize.min.css" media="screen,projection" />
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    
+    
     <!-- Bootstrap Styles-->
     <link href="/admin/stylesheets/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
     <link href="/admin/stylesheets/font-awesome.css" rel="stylesheet" />
     <link href="/admin/stylesheets/profile.css" rel="stylesheet" />   
     <link href="/employee/stylesheets/resume.css" rel="stylesheet" />   
+    <link href="/employee/stylesheets/croppie.css" rel="stylesheet" />   
     <!-- Custom Styles-->
     <link href="/admin/stylesheets/custom-styles.css" rel="stylesheet" />
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+    
+   
+
+   
 </head>
 
 <body>
@@ -79,14 +103,18 @@
     
     {{{body}}}
 
+    
+   
+   
     <script src="https://kit.fontawesome.com/b99e6.js"></script>
-    <script src="/admin/javascripts/jquery-1.10.2.js"></script>
-
+     <script src="/admin/javascripts/jquery-1.10.2.js"></script>
     <!-- Bootstrap Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
     <script src="/admin/javascripts/bootstrap.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="/user/javascripts/status.js"></script>
 
     <script src="/admin/materialize/js/materialize.min.js"></script>
-
     <!-- Metis Menu Js -->
     <script src="/admin/javascripts/jquery.metisMenu.js"></script>
     <!-- DATA TABLE SCRIPTS -->
@@ -94,14 +122,18 @@
     <script src="/admin/javascripts/dataTables/dataTables.bootstrap.js"></script>
     <script>
         $(document).ready(function () {
-            $('#dataTables-example').dataTable();
+            $('#user_details').dataTable();
         });
     </script>
 
     <!-- Custom Js -->
+
     <script src="/admin/javascripts/custom-scripts.js"></script>
-
-
+    <script src="/employee/javascripts/croppie.js"></script>
+     
+    
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script src="/employee/javascripts/crop.js"></script>
 </body>
 
 </html>

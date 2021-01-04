@@ -3,7 +3,13 @@ var bcrypt = require('bcrypt')
 var collections = require('../config/collections')
 var otpAuth = require('../config/otpauth')
 const objectId = require("mongodb").ObjectID
+const Razorpay = require('razorpay')
+const { response } = require('express')
 const twilio = require('twilio')(otpAuth.accountSId, otpAuth.authToken)
+var instance = new Razorpay({
+    key_id: 'rzp_test_aXiLerJwygr3M5',
+    key_secret: 'HjXinQy80vkLrKQg5VwtjQ3V',
+  });
 
 module.exports = {
 
@@ -146,7 +152,7 @@ module.exports = {
 
     getJobs: (id) => {
         return new Promise(async (resolve, reject) => {
-            let jobs = await db.get().collection(collections.JOB_COLLECTION).find({ eid: id }).toArray()
+            let jobs = await db.get().collection(collections.JOB_COLLECTION).find({ eid: id,paid:"1" }).toArray()
             console.log(jobs);
             resolve(jobs)
         })
@@ -154,10 +160,18 @@ module.exports = {
 
     editJob: (id) => {
         return new Promise((resolve, reject) => {
+            result={}
             db.get().collection(collections.JOB_COLLECTION).findOne({ _id: objectId(id) }).then((result) => {
-                resolve(result)
+                result.job=result
+                
+                db.get().collection(collections.CATEGORY_COLLECTION).find().toArray().then((response=>{
+                    result.categories=response
+                    resolve(result)
+                    
+                }))
+                
             })
-        })
+        }) 
     },
     updateJob: (id, userDetails) => {
         return new Promise((resolve, reject) => {
@@ -174,6 +188,7 @@ module.exports = {
                     language: userDetails.language,
                     pin: userDetails.pin,
                     qualification: userDetails.qualification,
+                    category:userDetails.category
                 }
             }).then((response) => {
                 resolve()
@@ -232,8 +247,13 @@ module.exports = {
     },
     viewResume:(id)=>{
         return new Promise((resolve,reject)=>{
+           let response={}
             db.get().collection(collections.APPLICATION_COLLECTION).findOne({_id:objectId(id)}).then((application)=>{
-                resolve(application)
+                response.application=application
+                db.get().collection(collections.USER_COLLECTION).findOne({_id:objectId(application.uid)}).then((result)=>{
+                    response.user=result
+                    resolve(response)
+                })
             })
         })
     },
@@ -255,7 +275,7 @@ module.exports = {
     },
     reject:(id)=>{
         return new Promise((resolve,reject)=>{
-            db.get().collection(collections.APPLICATION_COLLECTION).removeOne({_id:objectId(id)}).then((response)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).updateOne({_id:objectId(id)},{$set:{approve:"2"}}).then((response)=>{
                 resolve()
             })
         })
@@ -266,5 +286,81 @@ module.exports = {
                 resolve(user)
             })
         })
-    }
+    },
+    getAllDetails:(eId)=>{
+        return new Promise(async(resolve,reject)=>{
+            let details={}
+           let jobs= await db.get().collection(collections.JOB_COLLECTION).find({eid:eId}).toArray()
+            details.jobs=jobs.length
+            let requests= await db.get().collection(collections.APPLICATION_COLLECTION).find({eid:eId,approve:"0"}).toArray() 
+            details.requests=requests.length
+            let approved= await db.get().collection(collections.APPLICATION_COLLECTION).find({approve:"1"}).toArray()
+            details.approved=approved.length
+            let rejected= await db.get().collection(collections.APPLICATION_COLLECTION).find({approve:"2"}).toArray()
+            details.rejected=rejected.length
+            resolve(details)
+        })
+    },
+    generateRazorpay:(orderId)=>{
+        return new Promise((resolve,reject)=>{
+            var options = {
+                amount: 100000,  // amount in the smallest currency unit
+                currency: "INR",
+                receipt: ""+orderId
+              };
+              instance.orders.create(options, function(err, order) {
+                db.get().collection(collections.PAYMENT_COLLECTION).insertOne(order).then(()=>{
+                    resolve(order)
+                })
+                
+              });
+        })
+    },
+    verifyPayment:(details)=>{
+        return new Promise((resolve,reject)=>{
+            
+            const crypto =require('crypto')
+            let hmac= crypto.createHmac('sha256','HjXinQy80vkLrKQg5VwtjQ3V') 
+            hmac.update(details['payment[razorpay_order_id]']+'|'+details['payment[razorpay_payment_id]'])
+            hmac=hmac.digest("hex")
+            
+            if(hmac===details['payment[razorpay_signature]']){
+                resolve()
+            }else{
+                reject()
+            }
+        })
+    },
+    changePaymentStatus:(jobId)=>{
+        return new Promise((resolve,reject)=>{
+            
+            db.get().collection(collections.JOB_COLLECTION).updateOne({_id:objectId(jobId)},{$set:{
+                paid:"1"
+            }}).then((response)=>{
+                resolve()
+            })
+        })
+    },
+    viewJobDetails:(jobId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.JOB_COLLECTION).findOne({_id:objectId(jobId)}).then((result)=>{
+               
+                resolve(result)
+            })
+        })
+    },
+    viewApprovedList:(jobId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).find({jid:jobId}).toArray().then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    getCategory:()=>{{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.CATEGORY_COLLECTION).find().toArray().then((result)=>{
+                resolve(result)
+            })
+        })
+    }}
 }

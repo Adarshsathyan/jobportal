@@ -9,7 +9,7 @@
     </div>
 </div>
 <!-- ***** Preloader End ***** -->
-
+ 
 {{#if noedit}}
 {{else}}
 <!-- ***** Header Area Start ***** -->
@@ -26,8 +26,27 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="/jobs">Jobs</a></li>
                         <li><a href="/about">About Us</a></li>
-                        <li><a href="">Category</a></li>
+                        
                         <li><a href="/contact">Contact</a></li>
+                         {{#if user}}
+                        <li>
+                            <div class="dropdown">
+                                <a id="dLabel" role="button" data-toggle="dropdown" href="#" >
+                                    <i class="fa fa-bell"></i>
+                                </a>
+
+                                <ul class="dropdown-menu notifications bg-white " role="menu" aria-labelledby="dLabel" style="width: max-content; left: -262px;" > 
+                                    {{#each applied}}
+                                    
+                                    <p class="fa fa-dot-circle-o text-danger show">You have applied applied for {{this.designation}} at {{this.companyname}}</p><br>
+                                    {{/each}}
+                                     
+                                    
+                                </ul>
+                                
+                            </div>
+                        </li>
+                        {{/if}}
                         {{#if user}}
                         {{else}}
                         <li><a href="/employee">Post Job</a></li>
@@ -42,12 +61,12 @@
                             <div class="dropdown">
                                 <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   <i class="fa fa-user"></i>   {{user.name}}
+                                    <i class="fa fa-user"></i> {{user.name}}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="/profile">My Account</a>
                                     <a class="dropdown-item" href="/logout">logout</a>
-                                    
+
                                 </div>
                             </div>
                         </li>
@@ -62,5 +81,6 @@
             </div>
         </div>
     </div>
+    
 </header>
 {{/if}}

@@ -31,7 +31,7 @@ module.exports={
             let blockResponse={}
             let response={}
             let user=await db.get().collection(collections.USER_COLLECTION).findOne({username:userData.username})
-            //block=user.block
+            
             if(!user){
                 resolve({status:false})
             }
@@ -133,7 +133,7 @@ module.exports={
             }
             
         })
-    },
+    }, 
     getAllJobs:()=>{
         return new Promise(async(resolve,reject)=>{
             let jobs =await db.get().collection(collections.JOB_COLLECTION).find().toArray()
@@ -160,10 +160,16 @@ module.exports={
         })
     },
     applyJob:(application)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collections.APPLICATION_COLLECTION).insertOne(application).then((result)=>{
-                resolve(result.ops[0]._id)
-            })
+        return new Promise(async(resolve,reject)=>{
+            let user =  await db.get().collection(collections.APPLICATION_COLLECTION).findOne({uid:application.uid,jid:application.jid})
+            if(user){
+                resolve({status:false})
+            }else{
+                db.get().collection(collections.APPLICATION_COLLECTION).insertOne(application).then((result)=>{
+                    resolve(result.ops[0]._id)
+                })
+            }
+           
         })
     },
     updateUser:(id,userDetails)=>{
@@ -186,6 +192,84 @@ module.exports={
                 db.get().collection(collections.USER_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
                     resolve(result)
                 })
+            })
+        })
+    },
+    getAppliedJobs:(uId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).find({uid:uId}).toArray().then((result)=>{
+
+                resolve(result)
+            })
+        })
+    },
+    status:(appId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.APPLICATION_COLLECTION).findOne({_id:objectId(appId)}).then((result)=>{
+                
+                resolve(result)
+            })
+        })
+    },
+    cancelRequest:(id)=>{
+        return new Promise((resolve,reject)=>{ 
+            db.get().collection(collections.APPLICATION_COLLECTION).removeOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    getCategoryAndJobs:()=>{
+        return new Promise((resolve,reject)=>{ 
+            let response={}
+            db.get().collection(collections.CATEGORY_COLLECTION).find().toArray().then((result)=>{
+               response.categories=result
+               db.get().collection(collections.JOB_COLLECTION).find().limit(3).toArray().then((jobs)=>{
+                   response.jobs=jobs
+                   resolve(response)
+               
+                  
+               })
+            })
+        })
+    },
+    getSearchedJobs:(query)=>{
+        return new Promise(async(resolve,reject)=>{ 
+            let response={}
+            if(query.category){
+               let catJob=await db.get().collection(collections.JOB_COLLECTION).find({category:query.category}).toArray()
+                response.jobofcategory=catJob 
+              
+            }
+            if(query.jobname){
+                let jobofname=await db.get().collection(collections.JOB_COLLECTION).find({designation:{$regex:query.jobname,$options:"i"}}).toArray()
+                
+                response.jobofname=jobofname
+                
+            }
+            if(query.location){
+                let joboflocation=await db.get().collection(collections.JOB_COLLECTION).find({location:{$regex:query.location,$options:"i"}}).toArray()
+                
+                response.joboflocation=joboflocation
+                
+            }
+            resolve(response)
+        })
+    },
+    getNotified:(id)=>{
+        return new Promise((resolve,reject)=>{
+            
+            db.get().collection(collections.APPLICATION_COLLECTION).find({uid:id}).toArray().then((result)=>{
+                
+                resolve(result)
+            
+            })
+
+        })
+    },
+    contact:(contactDetails)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.CONTACT_COLLECTION).insertOne(contactDetails).then(()=>{
+                resolve()
             })
         })
     }

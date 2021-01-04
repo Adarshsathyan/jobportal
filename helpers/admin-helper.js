@@ -165,4 +165,66 @@ module.exports={
             })
         })
     },
-}
+    getAllDetails:()=>{
+        return new Promise(async(resolve,reject)=>{
+            let details={}
+         let employee= await  db.get().collection(collections.EMPLOYEE_COLLECTION).find().toArray()
+         details.employee=employee.length
+         let users=await db.get().collection(collections.USER_COLLECTION).find().toArray()
+         details.users=users.length
+         let blockedusers=await db.get().collection(collections.JOB_COLLECTION).find().toArray()
+         details.jobs=blockedusers.length
+         let revenue=await db.get().collection(collections.PAYMENT_COLLECTION).find().toArray()
+         rev=0
+         revenue.forEach(element => {
+             rev=rev+1000
+         });
+         let reve=rev
+         details.revenue=reve
+         let application=await db.get().collection(collections.APPLICATION_COLLECTION).find().toArray()
+         details.application=application.length
+         let approved=await db.get().collection(collections.APPLICATION_COLLECTION).find({approve:"1"}).toArray()
+         details.approved=approved.length
+         let rejected=await db.get().collection(collections.APPLICATION_COLLECTION).find({approve:"2"}).toArray()
+         details.rejected=rejected.length
+         let category=await db.get().collection(collections.CATEGORY_COLLECTION).find().toArray()
+         details.category=category.length
+         resolve(details)
+        })
+    },
+    viewEmployee:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.EMPLOYEE_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    viewUser:(id)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.USER_COLLECTION).findOne({_id:objectId(id)}).then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    addCategory:(category)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.CATEGORY_COLLECTION).insertOne(category).then(()=>{
+                resolve()
+            })
+        })
+    },
+    categoryList:()=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.CATEGORY_COLLECTION).find().toArray().then((result)=>{
+                resolve(result)
+            })
+        })
+    },
+    getFeedback:()=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collections.CONTACT_COLLECTION).find().toArray().then((result)=>{
+                resolve(result)
+            })
+        })  
+    }
+} 

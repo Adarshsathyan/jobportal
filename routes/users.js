@@ -1,28 +1,42 @@
 var express = require('express');
 var router = express.Router();
 var userHelper=require('../helpers/user-helper')
-
+var url=require('url')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res, next) { 
+  userHelper.getCategoryAndJobs().then((response)=>{
   if(req.session.userloggedIn){
-    res.render('user/index',{layout:'./layoutuser',user:req.session.user});
+    userHelper.getNotified(req.session.user._id).then((applications)=>{
+      req.session.applications=applications
+      res.render('user/index',{layout:'./layoutuser',user:req.session.user,applied:applications,
+      apply:req.session.status,categories:response.categories,jobs:response.jobs,searchop:req.session.searchoutput});
+      req.session.searchoutput=null
+    })
+      
+   
+   
   }else{
-    res.render('user/index',{layout:'./layoutuser'});
+    
+    res.render('user/index',{layout:'./layoutuser',categories:response.categories,jobs:response.jobs,searchop:req.session.searchoutput});
+    
+    req.session.searchoutput=null
   }
-  
+})
 });
 
 router.get('/jobs', function(req, res, next) {
   userHelper.getAllJobs().then((jobs)=>{
-    res.render('user/jobs',{layout:'./layoutuser',jobs:jobs,user:req.session.user});
+    res.render('user/jobs',{layout:'./layoutuser',jobs:jobs,user:req.session.user
+    ,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
   })
   
 });
 router.get('/jobdetails/:id', function(req, res, next) {
   userHelper.getJobDetails(req.params.id).then((jobdetail)=>{
     console.log(jobdetail);
-    res.render('user/job-detail',{layout:'./layoutuser',job:jobdetail,user:req.session.user});
+    res.render('user/job-detail',{layout:'./layoutuser',job:jobdetail,user:req.session.user 
+    ,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
   })
 });
 
@@ -132,22 +146,40 @@ router.post('/verify', function(req, res) {
   })
 });
 router.get('/about', function(req, res, next) {
-  res.render('user/about',{layout:'./layoutuser',user:req.session.user});
+  res.render('user/about',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
 });
 
 router.get('/jobdetails', function(req, res, next) {
-  res.render('user/job-details',{layout:'./layoutuser',user:req.session.user});
+  res.render('user/job-details',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
 });
 
 router.get('/contact', function(req, res, next) {
-  res.render('user/contact',{layout:'./layoutuser',user:req.session.user});
+  res.render('user/contact',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject,
+  contacted:req.session.contacted,applied:req.session.applications});
+  req.session.contacted=false
+});
+
+router.post('/contact', function(req, res, next) {
+  if(req.session.userloggedIn){
+    userHelper.contact(req.body).then(()=>{
+      req.session.contacted=true
+      res.redirect('/contact')
+    })
+  }else{
+    res.redirect('/login')
+  }
+  
 });
 
 
 router.get('/apply/:id', function(req, res) {
   if(req.session.userloggedIn){
     userHelper.apply(req.params.id).then((result)=>{
-      res.render('user/apply',{layout:'./layoutuser',job:result,user:req.session.user});
+      
+        res.render('user/apply',{layout:'./layoutuser',job:result,user:req.session.user
+        ,approve:req.session.approve,reject:req.session.reject,apply:req.session.applied,applied:req.session.applications});
+        req.session.applied=false
+     
     })
   }else{
     res.redirect('/login')
@@ -157,19 +189,24 @@ router.get('/apply/:id', function(req, res) {
 });
 
 router.post('/apply/', function(req, res) {
-  userHelper.applyJob(req.body).then((id)=>{
-    console.log(req.body);
-    let image=req.files.image
-    let resume=req.files.resume
-    image.mv('./public/application/userphotos/'+id+'.jpg')
-    resume.mv('./public/application/user-resumes/'+id+'.pdf')
-    res.redirect('/')
+  userHelper.applyJob(req.body).then((result)=>{
+    if(result.status){
+      req.session.applied=true
+      res.redirect('/apply'+req.body.jid)
+    }else{
+      res.redirect('/')
+    }
+    
   })
 });
 
 router.get('/profile', function(req, res, next) {
   if(req.session.userloggedIn){
-    res.render('user/profile',{layout:'./layoutuser',user:req.session.user});
+    userHelper.getAppliedJobs(req.session.user._id).then((appliedjobs)=>{
+      res.render('user/profile',{layout:'./layoutuser',user:req.session.user,appliedjobs
+      ,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
+    })
+    
   }else{
     res.redirect('/login')
   }
@@ -177,7 +214,9 @@ router.get('/profile', function(req, res, next) {
 });
 router.get('/editprofile/', function(req, res, next) {
   if(req.session.userloggedIn){
-    res.render('user/edit-profile',{layout:'./layoutuser',user:req.session.user});
+    res.render('user/edit-profile',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject
+    ,applied:req.session.applications});
+    
   }else{
     res.redirect('/login')
   }
@@ -188,14 +227,43 @@ router.post('/updateprofile/:id', function(req, res, next) {
     req.session.user=result
     if(req.files){
       let image=req.files.image
-    image.mv('./public/user/userimages/'+req.params.id+'.jpg')
+      image.mv('./public/user/userimages/'+req.params.id+'.jpg')
+    }if(req.files){
+      let resume=req.files.resume
+      resume.mv('./public/user/user-resumes/'+req.params.id+'.pdf')
     }
-    
     res.redirect('/profile')
-  
   })
 });
 
+router.get('/checkStatus/:id',function(req,res){
+  userHelper.status(req.params.id).then((job)=>{
+    if(job.approve==0){
+      res.json({pending:true})
+    }else if(job.approve==1){
+      res.json({confirm:true})
+    }else{
+      res.json({reject:true})
+    }
+  })
+})
+
+router.get('/cancelrequest/:id',function(req,res){
+  userHelper.cancelRequest(req.params.id).then(()=>{
+    res.json({status:true})
+  }) 
+})
+
+router.get('/searchjob',function(req,res){
+  var q=url.parse(req.url,true)
+  
+  userHelper.getSearchedJobs(q.query).then((response)=>{
+    
+    req.session.searchoutput=response
+    res.redirect('/')
+  })
+   
+})
 
 
 

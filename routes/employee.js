@@ -101,7 +101,10 @@ router.get('/approved', function(req, res) {
 });
 router.get('/addjob', function(req, res) {
   if(req.session.emploggedIn){
-    res.render('employee/add-job',{employee:true,employeeUser:req.session.employe});
+    employeeHelper.getCategory().then((category)=>{
+      res.render('employee/add-job',{employee:true,employeeUser:req.session.employe,category});
+    })
+    
 
   }else{
     res.redirect('/employee')
@@ -111,23 +114,53 @@ router.get('/addjob', function(req, res) {
 
 router.post('/addjob', function(req, res) {
   employeeHelper.addJob(req.body).then((id)=>{
-    let image=req.files.image
+    if(req.files){
+      let image=req.files.image
+      let logo=req.files.logo
+      logo.mv('./public/employee/job-logo/'+id+'.jpg')
     image.mv('./public/employee/job_images/'+id+'.jpg',(err,done)=>{
       if(!err){
-        res.redirect('/employee/jobs')
+        req.session.jobId=id
+        res.redirect('/employee/showpayment')
       }else{
         res.redirect('/employee/addjob')
       }
     })
-    
+    }
   })
   
 });
 
+router.get('/showpayment', function(req, res) {
+  if(req.session.emploggedIn){
+    res.render('employee/payment',{employee:true,employeeUser:req.session.employe,jobId:req.session.jobId});
+
+    
+  }else{
+    res.redirect('/employee')
+  }
+  
+});
+router.get('/razorpay/:id', function(req, res) {
+  if(req.session.emploggedIn){
+   employeeHelper.generateRazorpay(req.params.id).then((response)=>{
+    res.json(response)
+  
+   })
+  }else{
+    res.redirect('/employee')
+  }
+  
+});
+
+
 router.get('/home', function(req, res) {
   if(req.session.emploggedIn){
-    console.log(req.session.employe);
-    res.render('employee/index',{employee:true,employeeUser:req.session.employe});
+   employeeHelper.getAllDetails(req.session.employe._id).then((details)=>{
+    res.render('employee/index',{employee:true,employeeUser:req.session.employe,jobs:details.jobs,approved:details.approved,
+      requests:details.requests,rejected:details.rejected});
+   })
+    
   }else{
     res.redirect('/employee')
   }
@@ -200,8 +233,9 @@ router.post('/phone-signup', function(req, res) {
 });
 router.get('/editjob/:id', function(req, res){
   if(req.session.emploggedIn){
-    employeeHelper.editJob(req.params.id).then((response)=>{
-      res.render('employee/edit-job',{employee:true,job:response,employeeUser:req.session.employe})
+    employeeHelper.editJob(req.params.id).then((response)=>{ 
+    ;
+      res.render('employee/edit-job',{employee:true,job:response.job,categories:response.categories,employeeUser:req.session.employe})
     })
   }else{
     res.redirect('/employee')
@@ -220,10 +254,11 @@ router.get('/deletejob/:id',function(req,res){
   employeeHelper.deleteJob(req.params.id).then(()=>{
     res.redirect('/employee/jobs')
   })
-});
+}); 
 
 router.get('/profile',function(req,res){
   if(req.session.emploggedIn){
+    
       res.render('employee/profile',{employee:true,employeeUser:req.session.employe})
   }else{
     res.redirect('/employee')
@@ -250,9 +285,9 @@ router.post('/editprofile/:id',function(req,res){
     }) 
 })
 router.get('/viewresume/:id',function(req,res){
-  if(req.session.emploggedIn){
+  if(req.session.emploggedIn){ 
     employeeHelper.viewResume(req.params.id).then((application)=>{
-      res.render('employee/view-resume',{employee:true,employeeUser:req.session.employe,application})
+      res.render('employee/view-resume',{employee:true,employeeUser:req.session.employe,applicat:application.application,userdetail:application.user})
     })
     
   }else{
@@ -291,5 +326,46 @@ router.get('/userprofile/:id',function(req,res){
   }
 })
 
+router.get('/addlogo',function(req,res){
+  if(req.session.emploggedIn){
+      res.render('employee/add-logo',{employee:true,employeeUser:req.session.employe})
+  }else{
+    res.redirect('/employee')
+  }
+});
+
+router.post('/addlogo',function(req,res){
+  console.log("Hello");
+  console.log(req.body);
+  
+})
+router.post('/verify-payment',function(req,res){
+  console.log(req.body);
+  employeeHelper.verifyPayment(req.body).then(()=>{
+    
+    employeeHelper.changePaymentStatus(req.body['order[receipt]']).then(()=>{
+      res.json({status:true})
+    })
+  }).catch((err)=>{
+    res.json({status:false})
+  })
+  
+})
+
+router.get('/viewjob/:id',function(req,res){
+  if(req.session.emploggedIn){
+    employeeHelper.viewJobDetails(req.params.id).then((result)=>{
+     employeeHelper.viewApprovedList(req.params.id).then((applied)=>{
+  
+      res.render('employee/jobdetails',{employee:true,employeeUser:req.session.employe,result,applied})
+     }) 
+     
+    })
+     
+  }else{
+    res.redirect('/employee')
+  }
+ 
+})
 
 module.exports = router;

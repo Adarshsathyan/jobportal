@@ -39,21 +39,29 @@
                         </div>
                     </div>
                 </div>
+                
+
                 <div class="social_media">
                     <ul>
                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#"></a><i class="fa fa-twitter"></i></li>
                         <li><a href="#"></a><i class="fa fa-instagram"></i></li>
-
                     </ul>
+                    
                 </div>
+                
             </div>
              <div class="left">
                 <img src="/user/images/profile.jpg" alt="user" width="300">
                 <h4>{{employeeUser.name}}</h4>
                 <p>{{employeeUser.website}}</p>
-                <a href="/employee/editprofile/{{employeeUser._id}}" class="btn btn-danger  ">Edit Profile</a>
+                {{#if view}}
+                {{else}}
+                <a href="/employee/editprofile/{{employeeUser._id}}" class="btn btn-danger">Edit Profile</a>
+                <a class="btn btn-primary" href="/employee/addlogo">Add Logo</a>
+                {{/if}}
             </div>
+
         </div>
     </div>
 </div>

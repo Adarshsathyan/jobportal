@@ -2,6 +2,14 @@ var express = require('express');
 var router = express.Router();
 var adminHelper=require('../helpers/admin-helper')
 
+const verifyLog=(req,res,next)=>{
+  if(req.session.adminLoggedIn){
+    next()
+  }else{
+    res.redirect('/admin')
+  }
+}
+
 //login page
 router.get('/',function(req,res){
   if(req.session.adminLoggedIn){
@@ -34,7 +42,12 @@ router.post('/',function(req,res){
 router.get('/home', function(req, res){
   let admin=req.session.admin
   if(admin){
-    res.render('admin/index',{admin:true})
+    adminHelper.getAllDetails().then((details)=>{
+      res.render('admin/index',{admin:true,jobs:details.jobs,users:details.users,
+        employees:details.employee,jobs:details.jobs,revenue:details.revenue,application:details.application,approved:details.approved
+        ,rejected:details.rejected,category:details.category})
+    })
+    
   }else{
     res.redirect('/admin')
   }
@@ -150,4 +163,42 @@ router.get('/unblockuser/:id', function(req, res){
     res.redirect('/admin/blockedusers')
   }) 
 });
+router.get('/viewemployee/:id', function(req, res){
+  adminHelper.viewEmployee(req.params.id).then((response)=>{
+    req.session.onlyview=true
+    res.render('employee/profile',{employee:true,employeeUser:response,view:req.session.onlyview})
+  }) 
+});
+router.get('/viewuser/:id', function(req, res){
+  adminHelper.viewUser(req.params.id).then((user)=>{
+    req.session.noEdit=true
+      res.render('user/profile',{layout:'./layoutuser',user,noedit:true})
+  }) 
+});
+
+router.get('/category', verifyLog ,function(req, res){
+  adminHelper.categoryList().then((categories)=>{
+      res.render('admin/category',{admin:true,categories})
+    })
+  });
+
+router.get('/addcategory', verifyLog ,function(req, res){
+  
+    res.render('admin/add-category',{admin:true})
+  
+   
+});
+router.post('/addcategory', verifyLog ,function(req, res){
+  adminHelper.addCategory(req.body).then(()=>{
+    res.redirect('/admin/category')
+  })
+});
+router.get('/feedback', function(req, res){
+  adminHelper.getFeedback().then((messages)=>{
+      res.render('admin/feedbacks',{admin:true,messages})
+  }) 
+});
+
+
 module.exports = router;
+ 

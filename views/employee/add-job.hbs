@@ -2,89 +2,117 @@
     <div id="page-wrapper">
         <div class="container" style="background-color: white;">
             <h3 class="text-center" style="margin-top: 2em; margin-bottom: 2em;">Add Job</h3>
-            <form class=" mb-5" action="/employee/addjob" method="post" novalidate="novalidate" enctype="multipart/form-data">
+            <form class=" mb-5" action="/employee/addjob" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-5">
                         <div class="col-md-12">
                             <label style="color: black;">Name of Company</label>
                             <input type="text" class="form-control " id="name" name="name" value=""
-                                placeholder="Full name">
+                                placeholder="Full name" required="true">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Location</label>
                             <input type="text" class="form-control col-md" id="location" name="location" value=""
-                                placeholder="Location">
+                                placeholder="Location" required="">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Designation</label>
                             <input type="text" class="form-control col-md" id="phone" name="designation" value=""
-                                placeholder="Designation">
+                                placeholder="Designation" required="">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Type</label>
                             <input type="text" class="form-control col-md" id="type" name="type" value=""
-                                placeholder="Partime/Fulltime">
+                                placeholder="Partime/Fulltime" required="">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Skills</label>
                             <input type="text" class="form-control col-md" id="skills" name="skills" value=""
-                                placeholder="Skills">
+                                placeholder="Skills" required="">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Qualification</label>
-                            <input type="text" class="form-control col-md" id="qualification" name="qualification" value=""
-                                placeholder="Qualification">
+                            <input type="text" class="form-control col-md" id="qualification" name="qualification"
+                                value="" placeholder="Qualification" required="">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label style="color: black;">Category</label>
+                            <select name="category" id="" class="form-control col-md">
+                                <option value="" disabled selected="selected">--select category--</option>
+                                {{#each category}}
+                                <option value="{{this.category}}">{{this.category}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="col-md-12 form-group ">
-                            <label style="color: black;">Company Logo</label>
-                            <input type="file"  id="logo" name="logo" value=""
-                                placeholder="image">
+                            <label style="color: black;" for="upload_logo">Company Logo</label>
+                            <input type="file" id="logo" name="logo" value="" placeholder="image">
+                            <img id="selected_image" alt="">
                         </div>
+
                     </div>
                     <div class="col-md-6">
                         <div class="col-md-12 form-group ">
-                            <label style="color: black;">Experience Required</label>
+                             <label style="color: black;">Experience Required</label>
                             <input type="text" class="form-control col-md" id="experience" name="experience" value=""
-                                placeholder="Experience">
+                                placeholder="Experience" required="">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Language Needed</label>
                             <input type="text" class="form-control" id="language" name="language" value=""
-                                placeholder="Language">
+                                placeholder="Language" required="">
                         </div>
+                        
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Pin Number</label>
                             <input type="text" class="form-control col-md" id="Pin" name="pin" value=""
-                                placeholder="Pin">
+                                placeholder="Pin" required="">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Description</label>
-                                 <input type="text" class="form-control" id="Description" name="description" value=""
-                                placeholder="Description">
+                            <input type="text" class="form-control" id="Description" name="description" value=""
+                                placeholder="Description" required="">
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Salary</label>
-                                 <input type="number" class="form-control" id="salary" name="salary" value=""
-                                placeholder="salary"></textarea>
+                            <input type="number" class="form-control" id="salary" name="salary" value=""
+                                placeholder="salary" required=""></textarea>
                         </div>
                         <div class="col-md-12 form-group ">
                             <label style="color: black;">Image</label>
-                            <input type="file"  id="image" name="image" value=""
-                                placeholder="image">
-                                <input type="hidden"  name="eid" value="{{employeeUser._id}}">
+                            <input type="file" id="image" name="image" value="" placeholder="image" required="">
+                            <input type="hidden" name="eid" value="{{employeeUser._id}}">
+                            <input type="hidden" name="paid" value="0">
                         </div>
                         
-                         
+
                         <div class=" col-md-12 form-group " style="display: inline-flex;">
                             <button type="submit" value="submit" class="btn btn-success col-md-6">Submit</button>
                             <a href="/employee/jobs" class="btn btn-danger col-md-6"
                                 style="margin-left: 10px;">Cancel</a>
                         </div>
+                        <div class="col-md-12 form-group ">
+                            <img src="/user/images/job-price.jpg" alt="" style="width: 520px; height:100px;">
+                        </div </div>
+                    </div>
+            </form>
+            <div id="uploadimageModal" class="modal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <button class="close" type="button" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Upload nad Crop</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-8 text-center">
+                                <div id="image_demo"></div>
+                            </div>
+                            <div class="col-md-4"></div>
+                            <button class="btn btn-success crop_image">Crop Image</button>
+                        </div>
                     </div>
                 </div>
-            </form>
-            
-
+            </div>
             <br>
             <br>
         </div>

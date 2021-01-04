@@ -1,0 +1,92 @@
+<div id="page-wrapper">
+    <div class="header">
+        <h1 class="page-header mb-5">
+            {{result.designation}}
+        </h1>
+        
+    </div>
+    <div class="container" style="margin-top:62px;">
+        <div class="row">
+         
+            <div class="col-md-11">
+                <div class="card mt-3 col-md-12 shadow-lg p-3 mb-5">
+                    <div class="card-body">
+                        
+                    </div>
+                   
+                    <ul class="h4">
+                        <li class="list-group-item">Company<span style="float: right;">{{result.name}}</span></li>
+                        <li class="list-group-item">Location<span style="float: right;">{{result.location}}</span></li>
+                        <li class="list-group-item">Designation<span style="float: right;">{{result.designation}}</span></li>
+                        <li class="list-group-item">Salary<span style="float: right;">{{result.salary}}</span></li>
+                        <li class="list-group-item">Type<span style="float: right;">{{result.type}}</span></li>
+                        <li class="list-group-item">Skills Required<span style="float: right;">{{result.skills}}</span></li>
+                        <li class="list-group-item">Qualification<span style="float: right;">{{result.qualification}}</span></li>
+                        <li class="list-group-item">Experience<span style="float: right;">{{result.experience}}</span></li>
+                        <li class="list-group-item">Description<span style="float: right;">{{result.description}}</span></li>
+                        <li class="list-group-item">Category<span style="float: right;">{{result.category}}</span></li>
+                        <li class="list-group-item" style="padding-bottom: 65px;">Image<span style="float: right;">
+                            <img src="/employee/job_images/{{result._id}}.jpg" style="width:60px;height:60px; "></span></li>
+                       
+                    </ul>
+                   
+                    
+                </div>
+            </div>
+        
+        </div>
+    </div>
+    
+        <!-- /. NAV SIDE  -->
+        
+            <div id="page-inner">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <div class="card-action">
+
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr> 
+                                                <th>Applied users</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th>Skills</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each applied}}
+                                            <tr> 
+                                                <td>{{this.name}}</td>
+                                                <td>{{this.email}}</td>
+                                                <td>{{this.phone}}</td>
+                                                <td>{{this.skills}}</td>   
+                                            </tr>
+                                            {{/each}}
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+        <!-- /. WRAPPER  -->
+        <!-- JS Scripts-->
+
+
+      
+</div>

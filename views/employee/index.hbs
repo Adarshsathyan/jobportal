@@ -11,10 +11,13 @@
 
 		</div>
 		<div id="page-inner">
-
+			<div style="display: none;">
+				<P  id="rejected">{{rejected}}</P>
+			</div>
+			
 			<div class="dashboard-cards">
 				<div class="row">
-					<div class="col-xs-12 col-sm-6 col-md-3">
+					<div class="col-xs-12 col-sm-6 col-md-4">
 
 						<div class="card horizontal cardIcon waves-effect waves-dark">
 							<div class="card-image" style="background-color: rgb(3, 65, 77);">
@@ -22,7 +25,7 @@
 							</div>
 							<div class="card-stacked" style="background-color: rgb(3, 65, 77);">
 								<div class="card-content">
-									<h3>84,198</h3>
+									<h3 id="requests">{{requests}}</h3>
 								</div>
 								<div class="card-action">
 									<strong>REQUESTS</strong>
@@ -31,7 +34,7 @@
 						</div>
 
 					</div>
-					<div class="col-xs-12 col-sm-6 col-md-3">
+					<div class="col-xs-12 col-sm-6 col-md-4">
 
 						<div class="card horizontal cardIcon waves-effect waves-dark">
 							<div class="card-image" style="background-color: black;">
@@ -39,7 +42,7 @@
 							</div>
 							<div class="card-stacked" style="background-color: black;">
 								<div class="card-content">
-									<h3>36,540</h3>
+									<h3 id="jobs">{{jobs}}</h3>
 								</div>
 								<div class="card-action">
 									<strong>TOTAL JOBS</strong>
@@ -47,7 +50,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-6 col-md-3">
+					<div class="col-xs-12 col-sm-6 col-md-4">
 
 						<div class="card horizontal cardIcon waves-effect waves-dark">
 							<div class="card-image" style="background-color: rgb(23, 1, 119);">
@@ -55,7 +58,7 @@
 							</div>
 							<div class="card-stacked" style="background-color: rgb(23, 1, 119);">
 								<div class="card-content">
-									<h3>24,225</h3>
+									<h3 id="approved">{{approved}}</h3>
 								</div>
 								<div class="card-action">
 									<strong>APPROVED</strong>
@@ -64,31 +67,31 @@
 						</div>
 
 					</div>
-					<div class="col-xs-12 col-sm-6 col-md-3">
-
-						<div class="card horizontal cardIcon waves-effect waves-dark">
-							<div class="card-image" style="background-color: rgb(182, 6, 94);">
-								<i class="material-icons dp48">supervisor_account</i>
-							</div>
-							<div class="card-stacked" style="background-color: rgb(182, 6, 94);">
-								<div class="card-content">
-									<h3>88,658</h3>
-								</div>
-								<div class="card-action">
-									<strong>BLOCKED</strong>
-								</div>
-							</div>
-						</div>
-
-					</div>
+					
 				</div>
 			</div>
 			<!-- /. ROW  -->
+			<div class="row">
+				<div  class="col-md-6">
+				<h4>Overall status</h4>
+				<canvas  id="myChart" ></canvas>
+				</div>
+				<div  class="col-md-6">
+				<h4>Job Application Status</h4>
+				<canvas  id="jobChart" ></canvas>
+				<script src="/employee/javascripts/graph.js"></script>
+			</div>
+			</div>
+			
+			
+	
 		</div>
 		<!-- /. PAGE INNER  -->
 	</div>
 	<!-- /. PAGE WRAPPER  -->
+	
 </div>
+
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->

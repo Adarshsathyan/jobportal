@@ -30,12 +30,15 @@
                     <h4>{{user.name}}</h4>
                     <p>{{user.link}}</p>
                     <p>{{user.about}}</p>
-                    <a href="/application/user-resumes/5fdb7b0fedfe4d3a5c391a4b.pdf" download="resume" class="btn btn-danger mt-5">Download Resume</a>
+                    {{#if user.cv}}
+                    <a href="/user/user-resumes/{{user._id}}.pdf" download="resume" class="btn btn-danger mt-5">Download
+                        Resume</a>
+                    {{/if}}
                     {{#if noedit}}
 
                     {{else}}
                     <a href="/editprofile" class="btn btn-danger mt-5">Edit profile</a>
-                    {{/if}}               
+                    {{/if}}
                 </div>
                 <div class="right">
                     <div class="info">
@@ -63,27 +66,107 @@
                         <p>{{user.email}}</p>
                         <p>{{user.phone}}</p>
                     </div>
-                   <div class="social_media">
-                    <ul>
-                        {{#if user.linkedin}}
-                        <li><a href="{{user.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
-                        {{else}}
-                        {{/if}}
-                        {{#if user.link}}
-                        <li><a href="{{user.link}}"><i class="fa fa-link"></i></a></li>
-                        {{else}}
-                        {{/if}}
-                    </ul>
+                    <div class="social_media">
+                        <ul>
+                            {{#if user.linkedin}}
+                            <li><a href="{{user.linkedin}}"><i class="fa fa-linkedin"></i></a></li>
+                            {{else}}
+                            {{/if}}
+                            {{#if user.link}}
+                            <li><a href="{{user.link}}"><i class="fa fa-link"></i></a></li>
+                            {{else}}
+                            {{/if}}
+                        </ul>
+                    </div>
                 </div>
-                </div>
-                
             </div>
-            
         </div>
-        <div >
-            <h4 class="text-center "style="margin-bottom: 30px;">BUILD PROFILE TO GET HIRED</h4>
-        <center><img src="/user/images/line-dec.png" alt=""></center>
+    </div>
+    <div class="container">
+
+        <div style="margin-top: -195px;">
+            {{#each appliedjobs}}
+            <div class="card bg-light"
+                style="margin-top: -250px; width: 1101px; margin-bottom: 61px; display: inline-flex;">
+                <div class="card-header">
+                    {{this.designation}}
+                </div>
+                <div class="card-body bg-white">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="card-title">{{this.designation}}</h5>
+                            <p class="card-text">{{this.about}}
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>{{this.companyname}}</h5>
+                            <p>{{this.location}}</p>
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary"  
+                                id="display" onclick="status('{{this._id}}')">
+                                
+                                View Status
+                            </button>
+
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <button class="btn btn-primary" style="background-color: rgb(0, 0, 0);" onclick="cancel('{{this._id}}')" id="cancel">Cancel</button>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+
+            </div>
+            {{/each}}
         </div>
-         
+        <!-- Modal -->
+        <div class="modal fade" id="stat" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="btn btn-warning" id="status"></h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="cancelled" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Cancel Request</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="btn btn-danger" id="status">Do you want to cancel your request? </h4>
+                        <p class="mt-5"> *You can cancel request only before 6 hours after applying</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="yes">Yes</button>
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>

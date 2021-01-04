@@ -1,7 +1,7 @@
 <section>
     <div id="page-wrapper">
         <div class="container" style="background-color: white;">
-            <h3 class="text-center" style="margin-top: 2em; margin-bottom: 2em;">Add Job</h3>
+            <h3 class="text-center" style="margin-top: 2em; margin-bottom: 2em;">Edit Job</h3>
             <form class=" mb-5" action="/employee/editjob/{{job._id}}" method="post" novalidate="novalidate" enctype="multipart/form-data">
             
                 <div class="row">
@@ -36,12 +36,16 @@
                             <input type="text" class="form-control col-md" id="Qualification" name="qualification" value="{{job.qualification}}"
                                 placeholder="Qualification">
                         </div>
-                        <div class="col-md-12 form-group ">
-                            <label style="color: black;">Company Logo</label>
-                            <img src="/employee/job_logo/{{job._id}}.jpg" alt="" style="width:60px;height:60px; margin-bottom:5px;">
-                            <input type="file"  id="logo" name="logo" value=""
-                                placeholder="logo">
+                         <div class="col-md-12 form-group">
+                            <label style="color: black;">Category</label>
+                            <select name="category" id="" class="form-control col-md">
+                                <option  value="{{job.category}}">{{job.category}}</option>
+                                {{#each categories}}
+                                <option value="{{this.category}}">{{this.category}}</option>
+                                {{/each}}
+                            </select>
                         </div>
+                        
                     </div>
                     <div class="col-md-6">
                         <div class="col-md-12 form-group ">

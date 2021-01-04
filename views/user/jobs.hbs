@@ -21,61 +21,15 @@
             <br>
 
             <div class="row">
-                <div class="col-lg-4">
-                    <form action="#">
-                        <h5 style="margin-bottom: 15px">Category</h5>
+                
 
-                        <div>
-                            <label>
-                                <input type="checkbox">
-                                <span>Accounting & Finance(5)</span>
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="checkbox">
-                                <span>FrontEnd Development(5)</span>
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="checkbox">
-                                <span>Backend Development(7)</span>
-                            </label>
-                        </div>
-                        <br>
-                        <h5 style="margin-bottom: 15px">location</h5>
-                        <div>
-                            <label>
-                                <input type="checkbox">
-                                <span>Kerala</span>
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="checkbox">
-
-                                <span>Banglore</span>
-                            </label>
-                        </div>
-                        <div>
-                            <label>
-                                <input type="checkbox">
-                                <span>Hyderabad</span>
-                            </label>
-                        </div>
-                        <br>
-                    </form>
-                    <br>
-                </div>
-
-                <div class="col-lg-8">
+                <div class="col-md-12">
                     <div class="row">
                         {{#each jobs}}
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="trainer-item">
                                 <div class="image-thumb">
-                                    <img src="/employee/job_images/{{this._id}}.jpg" style="width: 259px; height:237px;" alt="">
+                                    <img src="/employee/job_images/{{this._id}}.jpg" style="width: 322px; height:241px;" alt="">
                                 </div>
                                 <div class="down-content">
                                     <span> <sup>$</sup>{{this.salary}}</span>
@@ -96,25 +50,7 @@
             </div>
             <br>
 
-            <nav>
-                <ul class="pagination pagination-lg justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            
 
         </div>
     </section>
@@ -122,15 +58,4 @@
 
 
     <!-- ***** Footer Start ***** -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>
-                        Copyright © 2020 JobOn
-                        
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    

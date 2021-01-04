@@ -2,54 +2,12 @@
 
     <div class="header">
         <h1 class="page-header mb-5">
-            Requests
+            Resume
         </h1>
     </div>
     <div id="page-inner">
         <div class="container">
-            <table class="col-md-10">
-                <tr>
-                    <td  bgcolor="#032147" style="color: white; padding:20px; width:30%;">
-                        <img src="/application/userphotos/{{application._id}}.jpg" alt="" style="border-radius:50%; width:150px;height:150px;">
-                        <h2 style="color:white;">Personal Details</h2>
-                        <hr>
-                        <p><b>Name:</b><br>
-                           {{application.name}}<br>
-                            <br>
-                            <b>Address:</b><br>
-                            {{application.location}}<br>
-                            <br>
-                            <b>Mobile:</b><br>
-                            {{application.phone}}<br>
-                            <br>
-                            <b>Email:</b><br>
-                            {{application.email}} <br>
-                            <br>
-                            <b>Location</b><br>
-                           {{application.location}}<br>
-                            <br>
-                        </p>
-
-                    </td>
-                    <td bgcolor="#FDFEFE" style="padding:15px; width:70%;">
-                        <h1>Adarsh sathyan</h1>
-                        <hr>
-                        <p>{{application.about}}</p><br><br>
-                        <h3>Work experience</h3>
-                        <hr>
-                        <p>{{application.experience}}</p>
-                        <h5>{{application.worked}}</h5><br>
-                        <h3>Skills</h3><hr>
-                        <p>{{application.skills}}</p><br>
-                        <h3>Location</h3><hr>
-                        <p>{{application.location}}</p><br>
-                        <h3>Email</h3><hr>
-                        <p>{{application.email}}</p>
-                        <br><br>
-                        <embed src="/application/user-resumes/{{application._id}}.pdf" type="application/pdf">
-                    </td>
-                </tr>
-            </table>
+            <embed src="/user/user-resumes/{{userdetail._id}}.pdf" type="application/pdf" title="Resume" style="width:800px; height:505px;">
         </div>
     </div>
 </div>
