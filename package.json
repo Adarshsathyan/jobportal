@@ -25,5 +25,18 @@
     "razorpay": "^2.0.6",
     "regex": "^0.1.1",
     "twilio": "^3.53.0"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adarshsathyan/job_portal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adarshsathyan/job_portal/issues"
+  },
+  "homepage": "https://github.com/Adarshsathyan/job_portal#readme",
+  "description": ""
 }
