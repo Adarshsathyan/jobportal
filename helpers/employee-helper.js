@@ -4,7 +4,6 @@ var collections = require('../config/collections')
 var otpAuth = require('../config/otpauth')
 const objectId = require("mongodb").ObjectID
 const Razorpay = require('razorpay')
-const { response } = require('express')
 const twilio = require('twilio')(otpAuth.accountSId, otpAuth.authToken)
 var instance = new Razorpay({
     key_id: 'rzp_test_aXiLerJwygr3M5',
@@ -106,10 +105,10 @@ module.exports = {
                             response.employee = pemployee
                             response.valid = true
                             resolve(response)
-                            console.log(response);
+                            
                         } else {
                             resolve(data)
-                            console.log(data);
+                            
                         }
                     })
             } else {
@@ -190,7 +189,7 @@ module.exports = {
                     qualification: userDetails.qualification,
                     category:userDetails.category
                 }
-            }).then((response) => {
+            }).then(() => {
                 resolve()
             })
         })
@@ -237,9 +236,7 @@ module.exports = {
     requests: (eid) => {
         return new Promise((resolve, reject) => {
             reqDetails = {}
-            
             db.get().collection(collections.APPLICATION_COLLECTION).find({ eid: eid,approve:"0" }).toArray().then((requests) => {
-                
                 resolve(requests)
             })
 

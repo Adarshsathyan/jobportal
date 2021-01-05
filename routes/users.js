@@ -13,13 +13,8 @@ router.get('/', function(req, res, next) {
       apply:req.session.status,categories:response.categories,jobs:response.jobs,searchop:req.session.searchoutput});
       req.session.searchoutput=null
     })
-      
-   
-   
   }else{
-    
     res.render('user/index',{layout:'./layoutuser',categories:response.categories,jobs:response.jobs,searchop:req.session.searchoutput});
-    
     req.session.searchoutput=null
   }
 })
@@ -34,7 +29,6 @@ router.get('/jobs', function(req, res, next) {
 });
 router.get('/jobdetails/:id', function(req, res, next) {
   userHelper.getJobDetails(req.params.id).then((jobdetail)=>{
-    console.log(jobdetail);
     res.render('user/job-detail',{layout:'./layoutuser',job:jobdetail,user:req.session.user 
     ,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
   })
@@ -119,7 +113,6 @@ router.post('/phone-signup', function(req, res, next) {
       res.redirect('/verify')
     }else{
       req.session.err=true
-      console.log("this");
       res.redirect('/phone-signup')
     }
   })
@@ -146,15 +139,18 @@ router.post('/verify', function(req, res) {
   })
 });
 router.get('/about', function(req, res, next) {
-  res.render('user/about',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
+  res.render('user/about',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,
+  reject:req.session.reject,applied:req.session.applications});
 });
 
 router.get('/jobdetails', function(req, res, next) {
-  res.render('user/job-details',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject,applied:req.session.applications});
+  res.render('user/job-details',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,
+  reject:req.session.reject,applied:req.session.applications});
 });
 
 router.get('/contact', function(req, res, next) {
-  res.render('user/contact',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject,
+  res.render('user/contact',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,
+  reject:req.session.reject,
   contacted:req.session.contacted,applied:req.session.applications});
   req.session.contacted=false
 });
@@ -175,11 +171,9 @@ router.post('/contact', function(req, res, next) {
 router.get('/apply/:id', function(req, res) {
   if(req.session.userloggedIn){
     userHelper.apply(req.params.id).then((result)=>{
-      
         res.render('user/apply',{layout:'./layoutuser',job:result,user:req.session.user
         ,approve:req.session.approve,reject:req.session.reject,apply:req.session.applied,applied:req.session.applications});
         req.session.applied=false
-     
     })
   }else{
     res.redirect('/login')
@@ -196,7 +190,6 @@ router.post('/apply/', function(req, res) {
     }else{
       res.redirect('/')
     }
-    
   })
 });
 
@@ -216,7 +209,6 @@ router.get('/editprofile/', function(req, res, next) {
   if(req.session.userloggedIn){
     res.render('user/edit-profile',{layout:'./layoutuser',user:req.session.user,approve:req.session.approve,reject:req.session.reject
     ,applied:req.session.applications});
-    
   }else{
     res.redirect('/login')
   }
@@ -256,9 +248,7 @@ router.get('/cancelrequest/:id',function(req,res){
 
 router.get('/searchjob',function(req,res){
   var q=url.parse(req.url,true)
-  
   userHelper.getSearchedJobs(q.query).then((response)=>{
-    
     req.session.searchoutput=response
     res.redirect('/')
   })

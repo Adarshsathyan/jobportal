@@ -183,10 +183,7 @@ router.get('/category', verifyLog ,function(req, res){
   });
 
 router.get('/addcategory', verifyLog ,function(req, res){
-  
     res.render('admin/add-category',{admin:true})
-  
-   
 });
 router.post('/addcategory', verifyLog ,function(req, res){
   adminHelper.addCategory(req.body).then(()=>{

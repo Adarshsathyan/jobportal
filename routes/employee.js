@@ -219,7 +219,7 @@ router.get('/phone-signup', function(req, res) {
 
 router.post('/phone-signup', function(req, res) {
   employeeHelper.phoneSignup(req.body).then((result)=>{
-    console.log(result);
+    
     if(result.status){
       req.session.signedIn=true
       req.session.phone=req.body.mobile
@@ -326,19 +326,6 @@ router.get('/userprofile/:id',function(req,res){
   }
 })
 
-router.get('/addlogo',function(req,res){
-  if(req.session.emploggedIn){
-      res.render('employee/add-logo',{employee:true,employeeUser:req.session.employe})
-  }else{
-    res.redirect('/employee')
-  }
-});
-
-router.post('/addlogo',function(req,res){
-  console.log("Hello");
-  console.log(req.body);
-  
-})
 router.post('/verify-payment',function(req,res){
   console.log(req.body);
   employeeHelper.verifyPayment(req.body).then(()=>{

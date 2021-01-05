@@ -27,7 +27,6 @@ module.exports={
     },
     userLogin:(userData)=>{
         return new Promise(async(resolve,reject)=>{
-            let loginStatus=false
             let blockResponse={}
             let response={}
             let user=await db.get().collection(collections.USER_COLLECTION).findOne({username:userData.username})
@@ -103,8 +102,7 @@ module.exports={
                         resolve(response)
                     }else{
                         resolve(data)
-                    }
-                    
+                    }   
             })
             
         })
@@ -198,7 +196,6 @@ module.exports={
     getAppliedJobs:(uId)=>{
         return new Promise((resolve,reject)=>{
             db.get().collection(collections.APPLICATION_COLLECTION).find({uid:uId}).toArray().then((result)=>{
-
                 resolve(result)
             })
         })
@@ -206,7 +203,6 @@ module.exports={
     status:(appId)=>{
         return new Promise((resolve,reject)=>{
             db.get().collection(collections.APPLICATION_COLLECTION).findOne({_id:objectId(appId)}).then((result)=>{
-                
                 resolve(result)
             })
         })
@@ -225,9 +221,7 @@ module.exports={
                response.categories=result
                db.get().collection(collections.JOB_COLLECTION).find().limit(3).toArray().then((jobs)=>{
                    response.jobs=jobs
-                   resolve(response)
-               
-                  
+                   resolve(response) 
                })
             })
         })
@@ -238,32 +232,23 @@ module.exports={
             if(query.category){
                let catJob=await db.get().collection(collections.JOB_COLLECTION).find({category:query.category}).toArray()
                 response.jobofcategory=catJob 
-              
             }
             if(query.jobname){
                 let jobofname=await db.get().collection(collections.JOB_COLLECTION).find({designation:{$regex:query.jobname,$options:"i"}}).toArray()
-                
-                response.jobofname=jobofname
-                
+                response.jobofname=jobofname  
             }
             if(query.location){
                 let joboflocation=await db.get().collection(collections.JOB_COLLECTION).find({location:{$regex:query.location,$options:"i"}}).toArray()
-                
                 response.joboflocation=joboflocation
-                
             }
             resolve(response)
         })
     },
     getNotified:(id)=>{
         return new Promise((resolve,reject)=>{
-            
-            db.get().collection(collections.APPLICATION_COLLECTION).find({uid:id}).toArray().then((result)=>{
-                
+            db.get().collection(collections.APPLICATION_COLLECTION).find({uid:id}).toArray().then((result)=>{  
                 resolve(result)
-            
             })
-
         })
     },
     contact:(contactDetails)=>{
