@@ -1,6 +1,6 @@
-.vscode/*
 node_modules
 .env
-public/
+.vscode
 database
-otpauth.js
+public
+config/otpauth.js
