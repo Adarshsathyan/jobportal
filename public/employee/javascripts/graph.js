@@ -1,6 +1,6 @@
  let jobChart=document.getElementById('jobChart').getContext('2d')
 let myChart= document.getElementById('myChart').getContext('2d');
-let request=document.getElementById('requests').innerText
+let request=document.getElementById('requests').innerText 
 let jobs=document.getElementById('jobs').innerText
 let approved=document.getElementById('approved').innerText
 

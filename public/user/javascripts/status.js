@@ -1,4 +1,4 @@
-const { json } = require("express")
+
 
 function status(uId){
     $.ajax({

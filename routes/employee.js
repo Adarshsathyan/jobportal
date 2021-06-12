@@ -146,7 +146,7 @@ router.get('/razorpay/:id', function(req, res) {
    employeeHelper.generateRazorpay(req.params.id).then((response)=>{
     res.json(response)
   
-   })
+   }) 
   }else{
     res.redirect('/employee')
   }
@@ -187,7 +187,7 @@ router.post('/phone', function(req, res) {
 router.get('/verify', function(req, res) {
   if(req.session.emploggedIn){
     res.redirect('/employee/home')
-  }else{
+  }else{ 
     res.render('employee/verify_phone',{layout:null,login:req.session.logErr});
     req.session.logErr=false
   }

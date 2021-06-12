@@ -11,7 +11,7 @@ var fileUpload = require("express-fileupload")
 var db=require('./config/connection')
 var session=require('express-session')
 var app = express();
-
+require('dotenv').config()
 // view engine setup
 app.use(function(req, res, next) {
   res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -25,11 +25,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret:"key",cookie:{maxAge:600000}}));
+app.use(session({secret:process.env.SESSION_KEY,cookie:{maxAge:600000}}));
 app.use(fileUpload())
 db.connect((err)=>{
   if(err) console.log('Database not connected'+err);
-  else console.log("Database Connected to port 27017");
+  else console.log("Database Connected ");
 })
 
 app.use('/', usersRouter);
