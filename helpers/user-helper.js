@@ -1,9 +1,9 @@
 var db=require('../config/connection')
 var bcrypt=require('bcrypt')
 var collections=require('../config/collections')
-var otpAuth=require('../config/otpauth')
 const objectId=require("mongodb").ObjectID
-const twilio=require('twilio')(otpAuth.accountSId,otpAuth.authToken)
+require('dotenv').config();
+const twilio = require('twilio')(process.env.ACCOUNTSID, process.env.AUTHTOKEN)
 
 module.exports={
     userSignup:(userDetails)=>{
@@ -68,7 +68,7 @@ module.exports={
                 db.get().collection(collections.USER_COLLECTION).insertOne(details).then((response)=>{
                     twilio
                         .verify
-                        .services(otpAuth.serviceID)
+                        .services(process.env.SERVICEID)
                         .verifications
                         .create({
                             to:"+91"+details.phone,
@@ -92,7 +92,7 @@ module.exports={
             console.log(puser);
             twilio
                 .verify
-                .services(otpAuth.serviceID)
+                .services(process.env.SERVICEID)
                 .verificationChecks
                 .create({
                     to:"+91"+mobilenum,
@@ -117,7 +117,7 @@ module.exports={
                 console.log("entered");
                 twilio
                     .verify
-                    .services(otpAuth.serviceID)
+                    .services(process.env.SERVICEID)
                     .verifications
                     .create({
                         to:"+91"+phoneDetails.phone,
